@@ -861,7 +861,7 @@
   <script>
     // ✅ Best practice: send form data to YOUR backend endpoint (serverless) that writes to Airtable.
     // Set this to your function URL (Netlify/Vercel/Cloudflare):
-    const WAITLIST_ENDPOINT = ""; // e.g. "https://your-site.netlify.app/.netlify/functions/waitlist"
+    const WAITLIST_ENDPOINT = "/api/waitlist"; // e.g. "https://your-site.netlify.app/.netlify/functions/waitlist"
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
