@@ -1,517 +1,362 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Lotus AI — People Intelligence for executives and BD. Meeting prep, research, and tasks delivered before every call." />
-  <title>Lotus AI — People Intelligence</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lotus AI | People Intelligence Before Every Meeting</title>
   <style>
     :root{
-      /* Pink + white palette (premium, calm) */
-      --bg: #fff7fb;
-      --bg2:#ffffff;
-      --card: rgba(255,255,255,.78);
-      --card2: rgba(255,255,255,.92);
-      --ink:#1f1a1d;
-      --muted: rgba(31,26,29,.65);
-      --line: rgba(31,26,29,.10);
-
-      --accent:#ff4fa3;
-      --accent2:#ff8ac8;
-      --accent3:#ffd3e6;
-
+      --bg:#fff7fb;
+      --card:#ffffff;
+      --text:#1f1a1d;
+      --muted:#6b5a63;
+      --pink:#ff4fa3;
+      --pink2:#ff8ac8;
+      --border:rgba(255,79,163,.20);
       --shadow: 0 18px 60px rgba(31,26,29,.10);
       --shadow2: 0 10px 30px rgba(255,79,163,.12);
-
-      --radius: 18px;
-      --radius2: 24px;
-      --max: 1040px;
-
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --radius: 22px;
+      --max: 1080px;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: var(--font);
-      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
       background:
-        radial-gradient(900px 520px at 18% 10%, rgba(255,79,163,.14), transparent 60%),
-        radial-gradient(900px 520px at 88% 16%, rgba(255,138,200,.16), transparent 60%),
-        radial-gradient(1100px 720px at 52% 108%, rgba(255,79,163,.08), transparent 58%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        radial-gradient(900px 420px at 18% 10%, rgba(255,79,163,.14), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(255,138,200,.16), transparent 60%),
+        radial-gradient(900px 520px at 50% 100%, rgba(255,79,163,.08), transparent 60%),
+        var(--bg);
       overflow-x:hidden;
     }
-
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 22px; }
-
-    /* Subtle grain for texture (light) */
-    .grain{
-      pointer-events:none;
-      position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-      opacity:.06;
-      mix-blend-mode: multiply;
-    }
-
-    /* Nav */
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,.70);
-      border-bottom: 1px solid var(--line);
-    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 22px 80px}
     .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding: 14px 0;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 6px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight: 820;
-      letter-spacing: .2px;
+      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;
     }
-    .brand span:last-child{ font-size: 15px; }
-
-    .navlinks{
-      display:flex; gap:10px; flex-wrap:wrap;
-      font-size:13px; color: rgba(31,26,29,.70);
+    .badge{
+      font-size:12px; color:var(--muted);
+      border:1px solid rgba(31,26,29,.10);
+      padding:6px 10px; border-radius:999px;
+      background:rgba(255,255,255,.6);
+      backdrop-filter: blur(8px);
     }
-    .navlinks a{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: background .18s ease, transform .18s ease, border-color .18s ease;
+    .hero{
+      display:grid; grid-template-columns: 1.2fr .8fr; gap:26px;
+      align-items:center;
+      padding:34px 0 10px;
     }
-    .navlinks a:hover{
-      background: rgba(255,79,163,.08);
-      border-color: rgba(255,79,163,.18);
-      transform: translateY(-1px);
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr; padding-top:22px}
     }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(31,26,29,.12);
-      background: rgba(255,255,255,.80);
-      box-shadow: 0 10px 28px rgba(31,26,29,.08);
-      font-weight: 760;
-      font-size: 13.5px;
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 16px 36px rgba(31,26,29,.10);
-      background: rgba(255,255,255,.92);
-      border-color: rgba(255,79,163,.22);
-    }
-    .btn.primary{
-      border: 0;
-      color: white;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 12px 30px rgba(255,79,163,.22);
-    }
-    .btn.primary:hover{
-      box-shadow: 0 16px 38px rgba(255,79,163,.28);
-    }
-
-    /* Lotus mark (premium gradient) */
-    .lotus{ width: 28px; height: 28px; display:inline-block; }
-    .lotus svg{ display:block; }
-
-    /* Hero */
-    .hero{ padding: 56px 0 16px; position:relative; }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 22px;
-      align-items:start;
-    }
-    @media (max-width: 960px){ .heroGrid{ grid-template-columns: 1fr; } }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,79,163,.18);
-      background: rgba(255,255,255,.70);
-      color: rgba(31,26,29,.74);
-      font-size: 13px;
-      width: fit-content;
-      box-shadow: var(--shadow2);
-    }
-
     h1{
-      margin: 14px 0 10px;
-      font-size: clamp(34px, 4.2vw, 56px);
-      line-height: 1.04;
-      letter-spacing: -0.9px;
+      font-size:52px; line-height:1.03; margin:0 0 14px;
+      letter-spacing:-.8px;
+    }
+    @media (max-width: 520px){
+      h1{font-size:40px}
     }
     .sub{
-      margin: 0 0 18px;
-      max-width: 60ch;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 16.5px;
+      font-size:18px; line-height:1.55; color:var(--muted);
+      margin:0 0 18px; max-width:58ch;
     }
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 16px; }
+    .pillrow{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 0}
+    .pill{
+      font-size:13px; color:rgba(31,26,29,.82);
+      padding:8px 10px; border-radius:999px;
+      background:rgba(255,255,255,.75);
+      border:1px solid rgba(31,26,29,.08);
+      box-shadow: 0 6px 18px rgba(31,26,29,.05);
+    }
 
-    /* Right panel (light, calm) */
-    .panel{
-      border-radius: var(--radius2);
-      background:
-        radial-gradient(520px 320px at 14% 12%, rgba(255,79,163,.10), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.72));
-      border: 1px solid rgba(31,26,29,.10);
+    .card{
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(31,26,29,.08);
+      border-top: 1px solid rgba(255,79,163,.22);
+      border-left: 1px solid rgba(255,79,163,.16);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .panel .inner{ padding: 18px; }
-
-    .mini{
-      border-radius: 16px;
-      background: rgba(255,255,255,.76);
-      border: 1px solid rgba(31,26,29,.08);
-      padding: 14px;
-    }
-    .mini h3{ margin:0 0 6px; font-size: 14px; letter-spacing:.1px; }
-    .mini p{ margin:0; color: rgba(31,26,29,.62); font-size: 13.5px; line-height:1.5; }
-
-    /* Asset: subtle “meeting card” lines */
-    .asset{
-      margin-top: 12px;
-      border-radius: 18px;
-      border: 1px dashed rgba(255,79,163,.22);
-      background: rgba(255,255,255,.60);
-      padding: 14px;
-      display:grid;
-      gap:10px;
-    }
-    .bar{
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(255,79,163,.22), rgba(255,138,200,.10), rgba(31,26,29,.06));
-    }
-    .row2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    .chip{
-      height: 28px;
-      border-radius: 12px;
-      border: 1px solid rgba(31,26,29,.08);
-      background: rgba(255,255,255,.78);
-    }
-    @media (max-width: 520px){ .row2{ grid-template-columns: 1fr; } }
-
-    /* Sections */
-    section{ padding: 44px 0; }
-    .sectionTitle{ margin-bottom: 14px; }
-    .sectionTitle h2{ margin:0; font-size: 26px; letter-spacing:-.4px; }
-    .sectionTitle p{ margin:8px 0 0; color: var(--muted); max-width: 60ch; }
-
-    /* How it works: arrows */
-    .flow{
-      display:flex; align-items:stretch; gap: 12px;
-      flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    .flowCard{
-      flex: 1 1 220px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(31,26,29,.10);
-      box-shadow: 0 12px 34px rgba(31,26,29,.08);
-      padding: 16px;
-    }
-    .flowCard b{ display:block; margin-bottom: 6px; letter-spacing:.2px; }
-    .flowCard span{ color: rgba(31,26,29,.62); font-size: 13.5px; line-height: 1.45; display:block; }
-    .arrow{
-      display:grid; place-items:center;
-      width: 44px;
-      flex: 0 0 44px;
-      color: rgba(31,26,29,.55);
-      opacity: .9;
-    }
-    .arrow svg{ display:block; }
-
-    @media (max-width: 720px){
-      .arrow{ display:none; }
-    }
-
-    /* Centered waitlist frame */
-    .waitlistWrap{
-      display:flex; justify-content:center;
-      margin-top: 18px;
-    }
-    .waitlistFrame{
-      width: min(760px, 100%);
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(255,79,163,.22);
-      background: rgba(255,255,255,.74);
-      box-shadow: var(--shadow), var(--shadow2);
-      position:relative;
-    }
-    .waitlistHead{
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(31,26,29,.10);
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      background:
-        radial-gradient(320px 200px at 12% 20%, rgba(255,79,163,.12), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.60));
-    }
-    .waitlistHead b{ letter-spacing:.2px; }
-    .waitlistHead small{ color: rgba(31,26,29,.60); }
-
-    iframe.airtable-embed{
-      display:block;
-      width:100%;
-      border:0 !important;
-      background: transparent;
-    }
-
-    /* Footer */
-    footer{
-      padding: 34px 0 50px;
-      border-top: 1px solid rgba(31,26,29,.10);
-      background: rgba(255,255,255,.55);
       backdrop-filter: blur(10px);
-      margin-top: 30px;
     }
-    .foot{
-      display:flex; flex-wrap:wrap; gap: 14px;
-      align-items:center; justify-content:space-between;
-    }
-    .muted{ color: rgba(31,26,29,.55); font-size: 12px; }
 
-    /* reveal */
-    @media (prefers-reduced-motion: no-preference){
-      .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
-      .reveal.on{ opacity:1; transform: translateY(0); }
+    .waitlist{
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--shadow), var(--shadow2);
     }
+    .waitlist h2{
+      margin:0 0 6px; font-size:18px;
+    }
+    .waitlist p{
+      margin:0 0 14px; color:var(--muted); font-size:14px; line-height:1.5;
+    }
+    form{display:grid; gap:10px; margin-top:10px}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    @media (max-width:520px){ .row{grid-template-columns:1fr} }
+    input, select, button{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(31,26,29,.12);
+      background:rgba(255,255,255,.9);
+      outline:none;
+      font-size:14px;
+    }
+    input:focus, select:focus{
+      border-color: rgba(255,79,163,.55);
+      box-shadow: 0 0 0 4px rgba(255,79,163,.16);
+    }
+    button{
+      cursor:pointer;
+      border:0;
+      color:white;
+      font-weight:700;
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      box-shadow: 0 10px 30px rgba(255,79,163,.28);
+      letter-spacing:.2px;
+    }
+    button:hover{transform: translateY(-1px)}
+    .fine{
+      font-size:12px; color:rgba(107,90,99,.95);
+      margin-top:10px;
+    }
+
+    .section{
+      margin-top:42px;
+      padding:24px;
+    }
+    .grid3{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
+    .tile{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(31,26,29,.08);
+      background:rgba(255,255,255,.72);
+    }
+    .kicker{
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,79,163,.95);
+      font-weight:800;
+      margin:0 0 8px;
+    }
+    .title{
+      font-size:18px; margin:0 0 6px;
+    }
+    .body{
+      margin:0; color:var(--muted); line-height:1.55;
+      font-size:14.5px;
+    }
+    .steps{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top:14px;
+    }
+    @media (max-width: 900px){ .steps{grid-template-columns:1fr} }
+    .stepnum{
+      width:34px; height:34px; border-radius:12px;
+      display:grid; place-items:center;
+      background:rgba(255,79,163,.12);
+      border:1px solid rgba(255,79,163,.22);
+      font-weight:800; color:rgba(255,79,163,.95);
+      margin-bottom:10px;
+    }
+    footer{
+      margin-top:46px;
+      padding:18px 6px 0;
+      color:rgba(107,90,99,.95);
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;
+    }
+    .links{display:flex; gap:14px; flex-wrap:wrap}
+    .softlink{opacity:.9; text-decoration:none}
+    .softlink:hover{text-decoration:underline}
+
+    /* Decorative blobs */
+    .blob{
+      position:absolute; inset:auto;
+      width:260px; height:260px;
+      border-radius: 60% 40% 55% 45% / 55% 55% 45% 45%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,138,200,.60), rgba(255,79,163,.18), transparent 65%);
+      filter: blur(0px);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .b1{top:-90px; right:-90px}
+    .b2{bottom:-120px; left:-110px; opacity:.35}
+    .logo svg{display:block}
   </style>
 </head>
-
 <body>
-  <div class="grain"></div>
-
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Lotus AI Home">
-        <span class="lotus" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <!-- Inline lotus mark -->
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+            <path d="M32 10c7 8 10 14 10 20 0 7-4 12-10 12s-10-5-10-12c0-6 3-12 10-20Z" fill="url(#g)"/>
+            <path d="M17 18c5 9 6 16 4 22-2 7-8 10-14 8 2-10 5-20 10-30Z" fill="url(#g2)" opacity=".9"/>
+            <path d="M47 18c5 10 8 20 10 30-6 2-12-1-14-8-2-6-1-13 4-22Z" fill="url(#g2)" opacity=".9"/>
+            <path d="M32 40c-8 0-16 3-22 9 7 3 14 5 22 5s15-2 22-5c-6-6-14-9-22-9Z" fill="url(#g3)" opacity=".9"/>
             <defs>
-              <linearGradient id="lg" x1="10" y1="10" x2="54" y2="54">
+              <linearGradient id="g" x1="22" y1="10" x2="46" y2="44">
+                <stop stop-color="#ff4fa3"/>
+                <stop offset="1" stop-color="#ff8ac8"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="8" y1="18" x2="32" y2="52">
+                <stop stop-color="#ff8ac8"/>
+                <stop offset="1" stop-color="#ff4fa3"/>
+              </linearGradient>
+              <linearGradient id="g3" x1="10" y1="40" x2="54" y2="58">
                 <stop stop-color="#ff4fa3"/>
                 <stop offset="1" stop-color="#ff8ac8"/>
               </linearGradient>
             </defs>
-            <path d="M32 10c7 8 10 14 10 20 0 7-4 12-10 12s-10-5-10-12c0-6 3-12 10-20Z" fill="url(#lg)"/>
-            <path d="M17 18c5 9 6 16 4 22-2 7-8 10-14 8 2-10 5-20 10-30Z" fill="url(#lg)" opacity=".75"/>
-            <path d="M47 18c5 10 8 20 10 30-6 2-12-1-14-8-2-6-1-13 4-22Z" fill="url(#lg)" opacity=".75"/>
           </svg>
         </span>
         <span>Lotus AI</span>
-      </a>
-
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#how">How it works</a>
-        <a href="#waitlist">Waitlist</a>
-        <a href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true" target="_blank" rel="noopener">LinkedIn</a>
-      </nav>
-
-      <a class="btn primary" href="#waitlist">Join waitlist</a>
-    </div>
-  </header>
-
-  <main id="top">
-    <div class="wrap hero">
-      <div class="heroGrid">
-        <div>
-          <div class="pill reveal">
-            <span class="lotus" aria-hidden="true">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="lg2" x1="10" y1="10" x2="54" y2="54">
-                    <stop stop-color="#ff4fa3"/>
-                    <stop offset="1" stop-color="#ff8ac8"/>
-                  </linearGradient>
-                </defs>
-                <path d="M32 10c7 8 10 14 10 20 0 7-4 12-10 12s-10-5-10-12c0-6 3-12 10-20Z" fill="url(#lg2)"/>
-                <path d="M17 18c5 9 6 16 4 22-2 7-8 10-14 8 2-10 5-20 10-30Z" fill="url(#lg2)" opacity=".75"/>
-                <path d="M47 18c5 10 8 20 10 30-6 2-12-1-14-8-2-6-1-13 4-22Z" fill="url(#lg2)" opacity=".75"/>
-              </svg>
-            </span>
-            People Intelligence for meetings
-          </div>
-
-          <h1 class="reveal">Walk into every meeting already prepared.</h1>
-          <p class="sub reveal">
-            Lotus AI is a people intelligence assistant for executives and business development teams.
-            It pulls context, research, and next-step tasks so you are not scrambling minutes before the call.
-          </p>
-
-          <div class="ctaRow reveal">
-            <a class="btn primary" href="#waitlist">Join waitlist</a>
-            <a class="btn" href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true" target="_blank" rel="noopener">Follow on LinkedIn</a>
-          </div>
-
-          <p class="muted reveal" style="margin-top:10px;">
-            Launching soon. Early waitlist gets first access.
-          </p>
-        </div>
-
-        <div class="panel reveal" aria-label="Simple product summary">
-          <div class="inner">
-            <div class="mini">
-              <h3>For executives and BD</h3>
-              <p>Less digging. More clarity. Stronger conversations.</p>
-            </div>
-            <div style="height:12px;"></div>
-            <div class="mini">
-              <h3>Calendar-first briefs</h3>
-              <p>Prep appears where your day already lives. Open the meeting card and you are ready.</p>
-            </div>
-            <div style="height:12px;"></div>
-            <div class="mini">
-              <h3>Tasks that move deals</h3>
-              <p>Auto-generated next steps and follow-ups. Clean, fast, and easy to act on.</p>
-            </div>
-
-            <div class="asset" aria-hidden="true">
-              <div class="bar"></div>
-              <div class="row2">
-                <div class="chip"></div>
-                <div class="chip"></div>
-              </div>
-              <div class="bar" style="opacity:.75"></div>
-            </div>
-          </div>
-        </div>
-
+        <span class="badge">People Intelligence for meetings</span>
+      </div>
+      <div class="links">
+        <a class="softlink" href="#how">How it works</a>
+        <a class="softlink" href="#trust">Trust</a>
+        <a class="softlink" href="#waitlist">Waitlist</a>
       </div>
     </div>
 
-    <section id="how">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <h2 class="reveal">How it works</h2>
-          <p class="reveal">Download, connect your calendar, and get your meeting brief before every call.</p>
+    <section class="hero">
+      <div>
+        <p class="kicker">Before the meeting starts</p>
+        <h1>Walk into every meeting already prepared.</h1>
+        <p class="sub">
+          Lotus AI is a people intelligence assistant for executives and business development teams.
+          It pulls context, research, and next-step tasks so you are not scrambling minutes before the call.
+        </p>
+        <div class="pillrow">
+          <span class="pill">Calendar-ready briefs</span>
+          <span class="pill">One-step research</span>
+          <span class="pill">Action items, not noise</span>
+          <span class="pill">Built for packed schedules</span>
         </div>
+      </div>
 
-        <div class="flow reveal" aria-label="How it works flow">
-          <div class="flowCard">
-            <b>Connect</b>
-            <span>Install Lotus AI. Choose what you want: briefs, tasks, or both.</span>
-          </div>
+      <div id="waitlist" class="card waitlist">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
 
-          <div class="arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h12" stroke="rgba(31,26,29,.50)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M13 6l6 6-6 6" stroke="rgba(31,26,29,.50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+        <h2>Join the waitlist</h2>
+        <p>Get early access to Lotus AI. We onboard a small group at a time.</p>
 
-          <div class="flowCard">
-            <b>Prep</b>
-            <span>People research, key context, and what matters for this meeting.</span>
+        <form onsubmit="event.preventDefault(); alert('Thanks! You are on the waitlist.');">
+          <div class="row">
+            <input required name="name" placeholder="Full name" />
+            <input required type="email" name="email" placeholder="Work email" />
           </div>
+          <div class="row">
+            <input name="company" placeholder="Company (optional)" />
+            <select name="role">
+              <option value="" selected>Role (optional)</option>
+              <option>Executive</option>
+              <option>Business Development</option>
+              <option>Sales</option>
+              <option>Founder</option>
+              <option>Operations</option>
+            </select>
+          </div>
+          <input name="meetings" placeholder="How many meetings per week? (e.g., 15)" />
+          <button type="submit">Request early access</button>
+          <div class="fine">We protect your data. No spam. You can opt out anytime.</div>
+        </form>
+      </div>
+    </section>
 
-          <div class="arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h12" stroke="rgba(31,26,29,.50)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M13 6l6 6-6 6" stroke="rgba(31,26,29,.50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <div class="flowCard">
-            <b>Follow-up</b>
-            <span>Next steps and clean recap, ready to send or track.</span>
-          </div>
+    <section class="card section">
+      <p class="kicker">The problem</p>
+      <div class="grid3">
+        <div class="tile">
+          <h3 class="title">Research takes too long</h3>
+          <p class="body">Tabs, notes, LinkedIn, emails, and last-minute prompts. It adds mental load every single day.</p>
+        </div>
+        <div class="tile">
+          <h3 class="title">Context is scattered</h3>
+          <p class="body">The details you need are spread across calendars, tools, and conversations. You lose time stitching it together.</p>
+        </div>
+        <div class="tile">
+          <h3 class="title">Meetings move fast</h3>
+          <p class="body">When your schedule is packed, “I’ll prep later” becomes “I’ll wing it.” That is expensive.</p>
         </div>
       </div>
     </section>
 
-    <section id="waitlist">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <h2 class="reveal">Join the waitlist</h2>
-          <p class="reveal">Get early access updates. No spam.</p>
+    <section class="card section" id="how">
+      <p class="kicker">How it works</p>
+      <div class="steps">
+        <div class="tile">
+          <div class="stepnum">1</div>
+          <h3 class="title">Download and connect</h3>
+          <p class="body">Install Lotus AI and connect your calendar. Choose what you want: briefs, tasks, or both.</p>
         </div>
-
-        <div class="waitlistWrap reveal">
-          <div class="waitlistFrame">
-            <div class="waitlistHead">
-              <b>Lotus AI — Early Access</b>
-              <small>~30 seconds</small>
-            </div>
-
-            <iframe
-              class="airtable-embed"
-              src="https://airtable.com/embed/appU6QR0VDsRRciEk/pagMCMptogVy5XWiR/form"
-              frameborder="0"
-              onmousewheel=""
-              width="100%"
-              height="533"
-              style="background: transparent;"
-              loading="lazy"
-              title="Lotus AI Waitlist Form"
-            ></iframe>
-          </div>
+        <div class="tile">
+          <div class="stepnum">2</div>
+          <h3 class="title">Lotus builds the brief</h3>
+          <p class="body">Before each meeting, Lotus gathers key facts, relationship context, and what matters for the call.</p>
         </div>
+        <div class="tile">
+          <div class="stepnum">3</div>
+          <h3 class="title">You show up ready</h3>
+          <p class="body">Open the meeting card to review. See your talking points and next actions in one place.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section" id="trust">
+      <p class="kicker">Why Lotus AI</p>
+      <div class="grid3">
+        <div class="tile">
+          <h3 class="title">Built for relief</h3>
+          <p class="body">Lotus is not another dashboard. It is calm preparation, delivered when you actually need it.</p>
+        </div>
+        <div class="tile">
+          <h3 class="title">Sits on top of your tools</h3>
+          <p class="body">Calendar-first workflow that works alongside Google Meet, Zoom, and your existing stack.</p>
+        </div>
+        <div class="tile">
+          <h3 class="title">Privacy-first by design</h3>
+          <p class="body">We protect your data, minimize exposure, and optimize for trust over growth tricks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <p class="kicker">Decision moment</p>
+      <div class="tile" style="display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+        <div>
+          <h3 class="title" style="margin:0 0 6px;">Be prepared for every meeting, automatically.</h3>
+          <p class="body" style="margin:0;">Join the waitlist and get onboarded with our early users and pilots.</p>
+        </div>
+        <a href="#waitlist" style="text-decoration:none;">
+          <button type="button" style="padding:12px 16px; width:auto;">Join the waitlist</button>
+        </a>
       </div>
     </section>
 
     <footer>
-      <div class="wrap foot">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="lotus" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="lg3" x1="10" y1="10" x2="54" y2="54">
-                  <stop stop-color="#ff4fa3"/>
-                  <stop offset="1" stop-color="#ff8ac8"/>
-                </linearGradient>
-              </defs>
-              <path d="M32 10c7 8 10 14 10 20 0 7-4 12-10 12s-10-5-10-12c0-6 3-12 10-20Z" fill="url(#lg3)"/>
-              <path d="M17 18c5 9 6 16 4 22-2 7-8 10-14 8 2-10 5-20 10-30Z" fill="url(#lg3)" opacity=".75"/>
-              <path d="M47 18c5 10 8 20 10 30-6 2-12-1-14-8-2-6-1-13 4-22Z" fill="url(#lg3)" opacity=".75"/>
-            </svg>
-          </span>
-          <div>
-            <div style="font-weight:900;">Lotus AI</div>
-            <div class="muted">© <span id="year"></span> • People made smarter</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn" href="#how">How it works</a>
-          <a class="btn primary" href="#waitlist">Join waitlist</a>
-          <a class="btn" href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
+      <div>© <span id="y"></span> Lotus AI. People made smarter.</div>
+      <div class="links">
+        <a class="softlink" href="#waitlist">Waitlist</a>
+        <a class="softlink" href="#" onclick="alert('Add your privacy page link here.'); return false;">Privacy</a>
+        <a class="softlink" href="#" onclick="alert('Add your contact email here.'); return false;">Contact</a>
       </div>
     </footer>
-  </main>
+  </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // reveal
-    const revealEls = Array.from(document.querySelectorAll(".reveal"));
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries){
-        if (e.isIntersecting) e.target.classList.add("on");
-      }
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
+    document.getElementById("y").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
