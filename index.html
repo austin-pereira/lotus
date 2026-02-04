@@ -1,1021 +1,691 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Lotus AI — People Intelligence for companies. Voice + data insights integrated across systems." />
-  <title>Lotus AI — People Intelligence</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Lotus AI — People Intelligence for companies. Meeting prep, signals, and follow-ups delivered into your tools."
+    />
+    <title>Lotus AI — People Intelligence</title>
 
-  <style>
-    :root{
-      /* Theme */
-      --bg0:#fbfbfd;
-      --bg1:#f3f3f7;              /* silver */
-      --ink:#15121a;
-      --muted: rgba(21,18,26,.62);
-      --line: rgba(21,18,26,.10);
+    <style>
+      :root {
+        /* Cleaner, higher-contrast palette */
+        --bg0: #0b0b10;
+        --bg1: #10101a;
+        --card: rgba(255, 255, 255, 0.06);
+        --card2: rgba(255, 255, 255, 0.1);
+        --ink: #f6f3fb;
+        --muted: rgba(246, 243, 251, 0.7);
+        --line: rgba(246, 243, 251, 0.14);
 
-      --pink:#f6bfd3;             /* light pink */
-      --pink2:#ffd3e5;
-      --rose:#e98ab0;
+        --accent: #f1a8c3; /* soft rose */
+        --accent2: #ffd3e5; /* light rose glow */
+        --accent3: #d76b95;
 
-      --glass: rgba(255,255,255,.62);
-      --glass2: rgba(255,255,255,.45);
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        --shadow2: 0 14px 44px rgba(0, 0, 0, 0.3);
+        --radius: 18px;
+        --radius2: 24px;
+        --max: 1040px;
 
-      --shadow: 0 22px 75px rgba(0,0,0,.14);
-      --shadow2: 0 14px 44px rgba(0,0,0,.10);
-      --radius: 18px;
-      --radius2: 26px;
-      --max: 1120px;
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      }
 
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--ink);
+        background: radial-gradient(
+            900px 700px at 75% -10%,
+            rgba(241, 168, 195, 0.22),
+            transparent 58%
+          ),
+          radial-gradient(
+            900px 700px at 20% 10%,
+            rgba(255, 211, 229, 0.12),
+            transparent 62%
+          ),
+          radial-gradient(
+            1100px 900px at 70% 85%,
+            rgba(241, 168, 195, 0.1),
+            transparent 62%
+          ),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+        overflow-x: hidden;
+      }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: var(--font);
-      color: var(--ink);
-      background:
-        radial-gradient(1000px 780px at 75% -10%, rgba(246,191,211,.62), transparent 56%),
-        radial-gradient(900px 700px at 20% 10%, rgba(255,211,229,.40), transparent 60%),
-        radial-gradient(1100px 900px at 70% 85%, rgba(246,191,211,.30), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 22px; }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 22px;
+      }
 
-    /* subtle grain */
-    .grain{
-      pointer-events:none;
-      position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
-      opacity:.10;
-      mix-blend-mode: overlay;
-    }
+      /* subtle grain */
+      .grain {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+        opacity: 0.08;
+        mix-blend-mode: overlay;
+      }
 
-    /* Nav */
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      background: rgba(245,245,249,.58);
-      border-bottom: 1px solid rgba(21,18,26,.07);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding: 14px 0;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight: 820;
-      letter-spacing: .2px;
-    }
-    .navlinks{ display:flex; gap:14px; flex-wrap:wrap; font-size:14px; color: rgba(21,18,26,.78); }
-    .navlinks a{
-      padding: 8px 10px;
-      border-radius: 999px;
-      transition: background .18s ease, transform .18s ease;
-    }
-    .navlinks a:hover{ background: rgba(246,191,211,.20); transform: translateY(-1px); }
+      /* Nav */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(10, 10, 16, 0.55);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 14px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 860;
+        letter-spacing: 0.2px;
+      }
+      .brand span:last-child {
+        font-size: 15px;
+      }
+      .navlinks {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: rgba(246, 243, 251, 0.78);
+      }
+      .navlinks a {
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        transition: background 0.18s ease, transform 0.18s ease,
+          border-color 0.18s ease;
+      }
+      .navlinks a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+      }
 
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(21,18,26,.12);
-      background: rgba(255,255,255,.56);
-      box-shadow: 0 10px 28px rgba(0,0,0,.08);
-      font-weight: 720;
-      font-size: 14px;
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 36px rgba(0,0,0,.10); }
-    .btn.primary{
-      border: 1px solid rgba(233,138,176,.42);
-      background: linear-gradient(135deg, rgba(246,191,211,.90), rgba(255,255,255,.62));
-    }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+        font-weight: 760;
+        font-size: 13.5px;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease,
+          background 0.18s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .btn.primary {
+        border: 1px solid rgba(241, 168, 195, 0.45);
+        background: linear-gradient(
+          135deg,
+          rgba(241, 168, 195, 0.26),
+          rgba(255, 255, 255, 0.06)
+        );
+      }
 
-    /* Hero */
-    .hero{ padding: 60px 0 18px; position:relative; }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 22px;
-      align-items:start;
-    }
-    @media (max-width: 960px){ .heroGrid{ grid-template-columns: 1fr; } }
+      /* Lotus mark (bigger + cleaner) */
+      .lotus {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+      }
+      .lotus svg {
+        display: block;
+      }
 
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(21,18,26,.10);
-      background: rgba(255,255,255,.55);
-      color: rgba(21,18,26,.75);
-      font-size: 13px;
-      box-shadow: var(--shadow2);
-      width: fit-content;
-    }
+      /* Hero */
+      .hero {
+        padding: 64px 0 18px;
+        position: relative;
+      }
+      .heroGrid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 22px;
+        align-items: start;
+      }
+      @media (max-width: 960px) {
+        .heroGrid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    h1{
-      margin: 14px 0 10px;
-      font-size: clamp(34px, 4.4vw, 58px);
-      line-height: 1.02;
-      letter-spacing: -0.9px;
-    }
-    .sub{
-      margin: 0 0 18px;
-      max-width: 60ch;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 16px;
-    }
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 16px; }
-    .fine{ font-size: 12px; color: rgba(21,18,26,.55); margin-top: 10px; }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(246, 243, 251, 0.82);
+        font-size: 13px;
+        width: fit-content;
+        box-shadow: var(--shadow2);
+      }
 
-    /* 3D asset / orbs */
-    .orb{
-      position:absolute;
-      width: 420px; height: 420px;
-      right: -140px; top: -130px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.78), rgba(246,191,211,.55) 40%, rgba(233,138,176,.12) 68%, transparent 72%),
-        radial-gradient(circle at 65% 70%, rgba(255,211,229,.58), transparent 55%);
-      border-radius: 999px;
-      filter: blur(.2px);
-      opacity:.9;
-      transform: translateZ(0);
-      pointer-events:none;
-    }
-    .orb2{
-      position:absolute;
-      width: 520px; height: 520px;
-      left: -220px; bottom: -260px;
-      background:
-        radial-gradient(circle at 35% 35%, rgba(255,255,255,.72), rgba(246,191,211,.42) 42%, rgba(233,138,176,.10) 70%, transparent 74%),
-        radial-gradient(circle at 70% 60%, rgba(255,211,229,.45), transparent 55%);
-      border-radius: 999px;
-      opacity:.85;
-      pointer-events:none;
-    }
+      h1 {
+        margin: 14px 0 10px;
+        font-size: clamp(34px, 4.2vw, 56px);
+        line-height: 1.04;
+        letter-spacing: -0.9px;
+      }
+      .sub {
+        margin: 0 0 18px;
+        max-width: 60ch;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 16px;
+      }
+      .ctaRow {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 16px;
+      }
 
-    /* Glass cards */
-    .panel{
-      border-radius: var(--radius2);
-      background: linear-gradient(180deg, var(--glass), var(--glass2));
-      border: 1px solid rgba(21,18,26,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .panel .inner{ padding: 18px; }
+      /* Right card (simple, not “AI-ish”) */
+      .panel {
+        border-radius: var(--radius2);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.07),
+          rgba(255, 255, 255, 0.04)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+      .panel .inner {
+        padding: 18px;
+      }
 
-    /* 3D tilt wrapper */
-    .tilt{
-      perspective: 900px;
-    }
-    .tiltCard{
-      transform-style: preserve-3d;
-      transition: transform .18s ease;
-      will-change: transform;
-    }
+      .mini {
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 14px;
+      }
+      .mini h3 {
+        margin: 0 0 6px;
+        font-size: 14px;
+        letter-spacing: 0.1px;
+      }
+      .mini p {
+        margin: 0;
+        color: rgba(246, 243, 251, 0.72);
+        font-size: 13px;
+        line-height: 1.5;
+      }
 
-    /* Trusted */
-    .trusted{
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(21,18,26,.09);
-      box-shadow: 0 12px 34px rgba(0,0,0,.06);
-    }
-    .trustedTop{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      color: rgba(21,18,26,.68);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-    .logoRow{
-      display:flex; gap: 10px; flex-wrap:wrap; align-items:center;
-    }
-    .logoPill{
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(21,18,26,.12);
-      background: rgba(246,191,211,.14);
-      font-weight: 760;
-      letter-spacing: .2px;
-      font-size: 12.5px;
-    }
+      /* How it works: arrows */
+      section {
+        padding: 44px 0;
+      }
+      .sectionTitle {
+        margin-bottom: 14px;
+      }
+      .sectionTitle h2 {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: -0.4px;
+      }
+      .sectionTitle p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        max-width: 60ch;
+      }
 
-    section{ padding: 44px 0; }
-    .sectionTitle{
-      display:flex; align-items:flex-end; justify-content:space-between; gap: 18px;
-      margin-bottom: 14px;
-    }
-    .sectionTitle h2{ margin:0; font-size: 28px; letter-spacing:-.4px; }
-    .sectionTitle p{ margin:0; color: var(--muted); max-width: 60ch; }
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .flowCard {
+        flex: 1 1 220px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+        padding: 16px;
+      }
+      .flowCard b {
+        display: block;
+        margin-bottom: 6px;
+        letter-spacing: 0.2px;
+      }
+      .flowCard span {
+        color: rgba(246, 243, 251, 0.72);
+        font-size: 13px;
+        line-height: 1.45;
+        display: block;
+      }
+      .arrow {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        flex: 0 0 44px;
+        color: rgba(246, 243, 251, 0.65);
+        opacity: 0.9;
+      }
+      .arrow svg {
+        display: block;
+      }
 
-    /* “Product in action” block */
-    .demoGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 960px){ .demoGrid{ grid-template-columns: 1fr; } }
+      @media (max-width: 720px) {
+        .arrow {
+          display: none;
+        }
+      }
 
-    .miniCard{
-      border-radius: 18px;
-      background: rgba(255,255,255,.56);
-      border: 1px solid rgba(21,18,26,.10);
-      box-shadow: 0 12px 34px rgba(0,0,0,.07);
-      padding: 14px;
-      position:relative;
-      overflow:hidden;
-    }
-    .miniCard::before{
-      content:"";
-      position:absolute; inset:-90px -70px auto auto;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle at 30% 30%, rgba(246,191,211,.72), transparent 60%);
-      transform: rotate(10deg);
-      opacity:.7;
-    }
-    .miniCard h3{ margin:0 0 8px; font-size: 15px; }
-    .miniCard p{ margin:0; color: var(--muted); font-size: 13.5px; line-height:1.5; }
+      /* Centered waitlist form */
+      .waitlistWrap {
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      .waitlistFrame {
+        width: min(760px, 100%);
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(241, 168, 195, 0.35);
+        background: linear-gradient(
+          180deg,
+          rgba(241, 168, 195, 0.1),
+          rgba(255, 255, 255, 0.04)
+        );
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.45);
+        position: relative;
+      }
+      .waitlistHead {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: radial-gradient(
+            280px 180px at 12% 20%,
+            rgba(241, 168, 195, 0.22),
+            transparent 62%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0)
+          );
+      }
+      .waitlistHead b {
+        letter-spacing: 0.2px;
+      }
+      .waitlistHead small {
+        color: rgba(246, 243, 251, 0.65);
+      }
 
-    /* Steps */
-    .steps{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 960px){ .steps{ grid-template-columns: 1fr; } }
-    .step{
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.56);
-      border: 1px solid rgba(21,18,26,.10);
-      box-shadow: 0 12px 34px rgba(0,0,0,.07);
-      padding: 16px;
-    }
-    .num{
-      width: 36px; height: 36px; border-radius: 14px;
-      display:grid; place-items:center;
-      font-weight: 900;
-      background: rgba(246,191,211,.30);
-      border: 1px solid rgba(233,138,176,.26);
-      margin-bottom: 10px;
-    }
-    .step h3{ margin:0 0 6px; font-size: 16px; }
-    .step p{ margin:0; color: var(--muted); font-size: 13.5px; line-height:1.5; }
+      /* iframe polish */
+      iframe.airtable-embed {
+        display: block;
+        width: 100%;
+        border: 0 !important;
+        background: transparent;
+      }
 
-    /* Pricing */
-    .pricingGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      align-items: stretch;
-    }
-    @media (max-width: 960px){ .pricingGrid{ grid-template-columns: 1fr; } }
-    .priceCard{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.56);
-      border: 1px solid rgba(21,18,26,.10);
-      box-shadow: 0 14px 44px rgba(0,0,0,.08);
-      padding: 18px;
-      display:flex; flex-direction:column;
-      position:relative; overflow:hidden;
-      min-height: 250px;
-    }
-    .priceCard.featured{
-      background: linear-gradient(180deg, rgba(246,191,211,.34), rgba(255,255,255,.56));
-      border: 1px solid rgba(233,138,176,.28);
-      box-shadow: 0 18px 60px rgba(233,138,176,.14), 0 18px 55px rgba(0,0,0,.09);
-      transform: translateY(-4px);
-    }
-    .badge{
-      position:absolute; top: 14px; right: 14px;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(233,138,176,.30);
-      background: rgba(255,255,255,.55);
-    }
-    .tier{ font-weight: 860; letter-spacing:.2px; }
-    .price{ font-size: 34px; letter-spacing:-.6px; margin: 10px 0 10px; }
-    .price small{ font-size: 14px; color: rgba(21,18,26,.62); font-weight: 700; }
-    .bullets{ margin: 10px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap: 8px; color: rgba(21,18,26,.72); }
-    .bullets li{ display:flex; gap:10px; align-items:flex-start; line-height:1.3; font-size: 13.5px; }
-    .dot{
-      width: 18px; height: 18px; border-radius: 999px;
-      background: rgba(246,191,211,.35);
-      border: 1px solid rgba(233,138,176,.24);
-      flex: 0 0 auto;
-      margin-top: 1px;
-    }
-    .priceCard .btn{ margin-top:auto; width:100%; }
+      /* Footer */
+      footer {
+        padding: 34px 0 50px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        margin-top: 30px;
+      }
+      .foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .muted {
+        color: rgba(246, 243, 251, 0.6);
+        font-size: 12px;
+      }
 
-    /* Partners blurred */
-    .partners{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.50);
-      border: 1px solid rgba(21,18,26,.09);
-      box-shadow: 0 12px 34px rgba(0,0,0,.06);
-      padding: 18px;
-      overflow:hidden;
-    }
-    .partners .logoRow{
-      filter: blur(7px);
-      opacity:.55;
-      user-select:none;
-      margin-top: 10px;
-    }
-    .partners small{ display:block; margin-top: 10px; color: rgba(21,18,26,.55); }
+      /* reveal */
+      @media (prefers-reduced-motion: no-preference) {
+        .reveal {
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .reveal.on {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
 
-    /* FAQ */
-    .faq{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.56);
-      border: 1px solid rgba(21,18,26,.10);
-      box-shadow: 0 12px 34px rgba(0,0,0,.07);
-      overflow:hidden;
-    }
-    details{ padding: 16px 18px; border-top: 1px solid rgba(21,18,26,.08); }
-    details:first-child{ border-top:none; }
-    summary{
-      list-style:none;
-      cursor:pointer;
-      font-weight: 820;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    .chev{
-      width: 10px; height: 10px;
-      border-right: 2px solid rgba(21,18,26,.55);
-      border-bottom: 2px solid rgba(21,18,26,.55);
-      transform: rotate(45deg);
-      transition: transform .18s ease;
-      flex: 0 0 auto;
-    }
-    details[open] .chev{ transform: rotate(225deg); }
-    details p{ margin: 10px 0 0; color: var(--muted); line-height:1.55; font-size: 13.5px; }
+  <body>
+    <div class="grain"></div>
 
-    /* Footer */
-    footer{
-      padding: 34px 0 50px;
-      border-top: 1px solid rgba(21,18,26,.08);
-      background: rgba(255,255,255,.18);
-      backdrop-filter: blur(10px);
-      margin-top: 30px;
-    }
-    .foot{
-      display:flex; flex-wrap:wrap; gap: 14px;
-      align-items:center; justify-content:space-between;
-    }
-    .social{ display:flex; gap:10px; align-items:center; }
-    .iconBtn{
-      width: 42px; height: 42px;
-      border-radius: 999px;
-      border: 1px solid rgba(21,18,26,.12);
-      background: rgba(255,255,255,.56);
-      box-shadow: 0 10px 28px rgba(0,0,0,.07);
-      display:grid; place-items:center;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .iconBtn:hover{ transform: translateY(-1px); box-shadow: 0 14px 34px rgba(0,0,0,.10); }
-
-    /* Floating waitlist */
-    .floatWrap{
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 60;
-      width: min(380px, calc(100vw - 36px));
-    }
-    .floatCard{
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.56));
-      border: 1px solid rgba(233,138,176,.26);
-      box-shadow: 0 26px 80px rgba(0,0,0,.20);
-      overflow:hidden;
-    }
-    .floatHead{
-      display:flex; justify-content:space-between; align-items:center;
-      padding: 14px 14px 10px;
-      background:
-        radial-gradient(220px 160px at 10% 20%, rgba(246,191,211,.65), transparent 62%),
-        linear-gradient(180deg, rgba(246,191,211,.18), rgba(255,255,255,.0));
-      border-bottom: 1px solid rgba(21,18,26,.08);
-    }
-    .floatHead b{ font-size: 13px; letter-spacing: .2px; }
-    .closeBtn{
-      border:none; background:transparent; cursor:pointer;
-      width: 34px; height: 34px; border-radius: 999px;
-      display:grid; place-items:center;
-      transition: background .18s ease;
-    }
-    .closeBtn:hover{ background: rgba(21,18,26,.06); }
-    .floatBody{ padding: 12px 14px 14px; }
-    .floatBody p{ margin: 0 0 10px; color: rgba(21,18,26,.68); font-size: 13px; line-height:1.45; }
-    .frow{ display:grid; grid-template-columns: 1fr; gap: 10px; }
-    .input{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(21,18,26,.14);
-      background: rgba(255,255,255,.66);
-      outline:none;
-      font-size: 14px;
-    }
-    .input:focus{ border-color: rgba(233,138,176,.55); box-shadow: 0 0 0 3px rgba(246,191,211,.35); }
-    .floatMsg{ margin-top: 10px; font-size: 12px; color: rgba(21,18,26,.62); min-height: 16px; }
-    .openPill{
-      display:none;
-      width: fit-content;
-      margin-left:auto;
-      border-radius: 999px;
-      border: 1px solid rgba(233,138,176,.35);
-      background: linear-gradient(135deg, rgba(246,191,211,.92), rgba(255,255,255,.62));
-      box-shadow: 0 18px 60px rgba(0,0,0,.18);
-      padding: 12px 14px;
-      font-weight: 860;
-      cursor:pointer;
-      gap: 10px;
-      align-items:center;
-      position:absolute;
-      right: 0;
-      bottom: -54px;
-    }
-
-    /* Lotus mark (simple) */
-    .lotus{ width: 22px; height: 22px; display:inline-block; }
-    .lotus svg{ display:block; }
-
-    /* reveal */
-    @media (prefers-reduced-motion: no-preference){
-      .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
-      .reveal.on{ opacity:1; transform: translateY(0); }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="grain"></div>
-
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Lotus AI Home">
-        <span class="lotus" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 10c3 7 3 13 0 20-3-7-3-13 0-20Z" fill="rgba(233,138,176,.95)"/>
-            <path d="M18 16c6 5 9 10 10 18-7-4-10-9-10-18Z" fill="rgba(246,191,211,.85)"/>
-            <path d="M46 16c-6 5-9 10-10 18 7-4 10-9 10-18Z" fill="rgba(246,191,211,.85)"/>
-            <path d="M12 28c8 2 13 6 17 13-8-1-13-5-17-13Z" fill="rgba(255,211,229,.90)"/>
-            <path d="M52 28c-8 2-13 6-17 13 8-1 13-5 17-13Z" fill="rgba(255,211,229,.90)"/>
-          </svg>
-        </span>
-        <span>Lotus AI</span>
-      </a>
-
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#how">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="blog.html">Blog</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-
-      <button class="btn primary" type="button" id="joinTopBtn">Join waitlist</button>
-    </div>
-  </header>
-
-  <main id="top">
-   <!--
-    <section style="padding: 22px 0 10px;"> 
-  <div class="wrap">
-    <div class="panel" style="overflow:hidden;">
-      <div class="inner" style="padding:14px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;">
-          <div>
-            <div style="font-weight:900;letter-spacing:.2px;">What Lotus AI does</div>
-            <div style="font-size:13px;color:rgba(21,18,26,.60);margin-top:4px;">
-              Meetings → people insights → integrated actions
-            </div>
-          </div>
-          <span class="badge">Demo</span>
-        </div>
-
-        <div style="
-          border-radius: 20px;
-          overflow:hidden;
-          border: 1px solid rgba(21,18,26,.10);
-          box-shadow: 0 14px 44px rgba(0,0,0,.10);
-          background: rgba(255,255,255,.35);
-        ">
-          <video
-            src="/assets/lotus-demo.mp4"
-            poster="/assets/lotus-poster.jpg"
-            autoplay
-            muted
-            loop
-            playsinline
-            controls
-            style="display:block;width:100%;height:auto;"
-          ></video>
-        </div>
-
-        <div style="margin-top:10px;font-size:12.5px;color:rgba(21,18,26,.58);">
-          Tip: keep it ~15–25 seconds, captioned, and readable without sound.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-    -->
-    <div class="wrap hero">
-      <div class="orb" aria-hidden="true"></div>
-      <div class="orb2" aria-hidden="true"></div>
-
-      <div class="heroGrid">
-        <div>
-          <div class="pill reveal">
-            <span class="lotus" aria-hidden="true">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M32 10c3 7 3 13 0 20-3-7-3-13 0-20Z" fill="rgba(233,138,176,.95)"/>
-                <path d="M18 16c6 5 9 10 10 18-7-4-10-9-10-18Z" fill="rgba(246,191,211,.85)"/>
-                <path d="M46 16c-6 5-9 10-10 18 7-4 10-9 10-18Z" fill="rgba(246,191,211,.85)"/>
-              </svg>
-            </span>
-            People Intelligence • Voice + Data • Integrations
-          </div>
-
-          <h1 class="reveal">People intelligence, Amplified.</h1>
-          <p class="sub reveal">
-            Lotus AI turns meetings into deep insights — prep, signals, follow-ups — delivered into your existing systems.
-          </p>
-
-          <div class="ctaRow reveal">
-            <button class="btn primary" type="button" id="joinHeroBtn">Join waitlist</button>
-            <a class="btn" href="#pricing">Pricing</a>
-          </div>
-
-          <div class="fine reveal">Vision: the people intelligence layer for every company.</div>
-
-          <div class="trusted reveal" style="margin-top:18px;">
-            <div class="trustedTop">
-              <span><b>Trusted by partners</b> (blurred for now)</span>
-              <span style="opacity:.7;">launch soon</span>
-            </div>
-            <div class="logoRow" style="filter: blur(6px); opacity:.55;">
-              <div class="logoPill">Partner A</div>
-              <div class="logoPill">Partner B</div>
-              <div class="logoPill">Partner C</div>
-              <div class="logoPill">Partner D</div>
-              <div class="logoPill">Partner E</div>
-            </div>
-          </div>
-        </div>
--->
-        <!-- “Product in action” 3D panel -->
-        <div class="tilt reveal" aria-label="Product preview">
-          <div class="panel tiltCard" id="tiltCard">
-            <div class="inner">
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                <div>
-                  <div style="font-weight:900;letter-spacing:.2px;">Live meeting intelligence</div>
-                  <div style="font-size:13px;color:rgba(21,18,26,.60);margin-top:4px;">Voice + context → action</div>
-                </div>
-                <span class="badge">Preview</span>
-              </div>
-
-              <div class="demoGrid" style="margin-top:14px;">
-                <div class="miniCard">
-                  <h3>Prep</h3>
-                  <p>Key context • stakeholders • risks</p>
-                  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">CRM</span>
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">Calendar</span>
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">Docs</span>
-                  </div>
-                </div>
-
-                <div class="miniCard">
-                  <h3>Signals</h3>
-                  <p>Intent • alignment • uncertainty</p>
-                  <div style="margin-top:10px;border-top:1px solid rgba(21,18,26,.08);padding-top:10px;color:rgba(21,18,26,.62);font-size:12.5px;line-height:1.45;">
-                    Confidence • evidence-first summaries
-                  </div>
-                </div>
-
-                <div class="miniCard">
-                  <h3>Follow-up</h3>
-                  <p>Next steps • owners • deadlines</p>
-                  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">Email</span>
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">Slack</span>
-                    <span class="logoPill" style="background:rgba(255,255,255,.55);">Tasks</span>
-                  </div>
-                </div>
-
-                <div class="miniCard">
-                  <h3>Hardware-ready</h3>
-                  <p>Keys launching soon</p>
-                  <div style="margin-top:10px;border-top:1px solid rgba(21,18,26,.08);padding-top:10px;color:rgba(21,18,26,.62);font-size:12.5px;line-height:1.45;">
-                    Built for integrations across systems.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Optional: embed a real 3D scene (Spline) later -->
-              <!--
-              <div style="margin-top:14px;border-radius:18px;overflow:hidden;border:1px solid rgba(21,18,26,.10);">
-                <iframe src="YOUR_SPLINE_URL" width="100%" height="240" style="border:0;" loading="lazy"></iframe>
-              </div>
-              -->
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- How it works (Mendral-like “from X to Y” flow) -->
-    <section id="how">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <div>
-            <h2 class="reveal">How it works</h2>
-            <p class="reveal">Capture → understand → deliver.</p>
-          </div>
-        </div>
-
-        <div class="steps">
-          <div class="step reveal">
-            <div class="num">1</div>
-            <h3>Capture</h3>
-            <p>Voice + meeting context.</p>
-          </div>
-          <div class="step reveal">
-            <div class="num">2</div>
-            <h3>Synthesize</h3>
-            <p>People insights with evidence.</p>
-          </div>
-          <div class="step reveal">
-            <div class="num">3</div>
-            <h3>Integrate</h3>
-            <p>Push into your systems.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section id="features">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <div>
-            <h2 class="reveal">What you get</h2>
-            <p class="reveal">Less noise. More clarity.</p>
-          </div>
-        </div>
-
-        <div class="demoGrid">
-          <div class="miniCard reveal">
-            <h3>Meeting prep</h3>
-            <p>Context that matters, fast.</p>
-          </div>
-          <div class="miniCard reveal">
-            <h3>Deep insights</h3>
-            <p>Signals from voice + data.</p>
-          </div>
-          <div class="miniCard reveal">
-            <h3>Follow-ups</h3>
-            <p>Owners, deadlines, next steps.</p>
-          </div>
-          <div class="miniCard reveal">
-            <h3>Integrations</h3>
-            <p>Multi-system by design.</p>
-          </div>
-        </div>
-
-        <div class="partners reveal" style="margin-top:14px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-            <b>Trusted partners</b>
-            <span style="font-size:12px;color:rgba(21,18,26,.55);">blurred for now</span>
-          </div>
-          <div class="logoRow">
-            <div class="logoPill">Partner A</div>
-            <div class="logoPill">Partner B</div>
-            <div class="logoPill">Partner C</div>
-            <div class="logoPill">Partner D</div>
-          </div>
-          <small>Revealing after launch.</small>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <div>
-            <h2 class="reveal">Pricing</h2>
-            <p class="reveal">Simple tiers to start.</p>
-          </div>
-        </div>
-
-        <div class="pricingGrid">
-          <div class="priceCard reveal">
-            <div class="tier">Sample</div>
-            <div class="price">$0 <small>/ mo</small></div>
-            <ul class="bullets">
-              <li><span class="dot"></span> Up to <b>5 meetings/day</b></li>
-              <li><span class="dot"></span> Core insights</li>
-              <li><span class="dot"></span> Export follow-ups</li>
-            </ul>
-            <button class="btn" type="button" data-join>Join waitlist</button>
-          </div>
-
-          <div class="priceCard featured reveal">
-            <span class="badge">Popular</span>
-            <div class="tier">Starter</div>
-            <div class="price">$10 <small>/ mo</small></div>
-            <ul class="bullets">
-              <li><span class="dot"></span> People insights + workflow</li>
-              <li><span class="dot"></span> Early integrations</li>
-              <li><span class="dot"></span> Faster prep + follow-ups</li>
-            </ul>
-            <button class="btn primary" type="button" data-join>Join waitlist</button>
-          </div>
-
-          <div class="priceCard reveal">
-            <div class="tier">Enterprise</div>
-            <div class="price">Custom</div>
-            <ul class="bullets">
-              <li><span class="dot"></span> SSO + controls</li>
-              <li><span class="dot"></span> Custom integrations</li>
-              <li><span class="dot"></span> Dedicated support</li>
-            </ul>
-            <button class="btn" type="button" data-join>Talk to us</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <div>
-            <h2 class="reveal">FAQ</h2>
-            <p class="reveal">Quick answers.</p>
-          </div>
-        </div>
-
-        <div class="faq reveal">
-          <details>
-            <summary>Who is it for? <span class="chev" aria-hidden="true"></span></summary>
-            <p>Anyone attending meetings — or doing prep and follow-ups.</p>
-          </details>
-          <details>
-            <summary>Who can use it? <span class="chev" aria-hidden="true"></span></summary>
-            <p>Business development teams and C-suite leaders.</p>
-          </details>
-          <details>
-            <summary>Is it integrable into hardware? <span class="chev" aria-hidden="true"></span></summary>
-            <p>Yes — <b>Keys</b> launching soon.</p>
-          </details>
-          <details>
-            <summary>Can it integrate into multiple systems? <span class="chev" aria-hidden="true"></span></summary>
-            <p>Yes — built to integrate voice + data across tools.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <div>
-            <h2 class="reveal">Contact</h2>
-            <p class="reveal">Partnerships + enterprise inquiries.</p>
-          </div>
-        </div>
-
-        <div class="panel reveal">
-          <div class="inner" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;">
-            <div>
-              <div style="font-weight:900;">Lotus AI</div>
-              <div style="color:rgba(21,18,26,.65);font-size:13px;margin-top:4px;">People Intelligence • Voice + Data</div>
-              <div style="margin-top:10px;color:rgba(21,18,26,.60);font-size:13px;">
-                <a href="mailto:hello@lotusai.com" style="text-decoration:underline;">hello@lotusai.com</a>
-              </div>
-            </div>
-
-            <div class="social" aria-label="Social links">
-              <a class="iconBtn" href="#" aria-label="LinkedIn" title="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M6.94 8.5V20H3.5V8.5h3.44ZM5.22 3C4.1 3 3.35 3.75 3.35 4.72c0 .95.73 1.72 1.83 1.72h.02c1.14 0 1.86-.77 1.86-1.72C7.06 3.75 6.36 3 5.22 3Z" fill="rgba(21,18,26,.75)"/>
-                  <path d="M20.5 20h-3.44v-6.06c0-1.52-.54-2.56-1.9-2.56-1.03 0-1.64.7-1.91 1.37-.1.24-.12.58-.12.92V20H9.69s.05-10.27 0-11.5h3.44v1.63c.46-.71 1.27-1.71 3.08-1.71 2.25 0 3.94 1.47 3.94 4.62V20Z" fill="rgba(21,18,26,.75)"/>
-                </svg>
-              </a>
-
-              <a class="iconBtn" href="#" aria-label="X" title="X">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M18.9 3H22l-6.78 7.75L23 21h-6.2l-4.85-6.34L6.2 21H3l7.28-8.32L1 3h6.35l4.38 5.78L18.9 3Zm-1.09 16.2h1.72L6.42 4.72H4.58L17.81 19.2Z" fill="rgba(21,18,26,.75)"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap foot">
-        <div style="display:flex;align-items:center;gap:10px;">
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="#top" aria-label="Lotus AI Home">
           <span class="lotus" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 10c3 7 3 13 0 20-3-7-3-13 0-20Z" fill="rgba(233,138,176,.95)"/>
-              <path d="M18 16c6 5 9 10 10 18-7-4-10-9-10-18Z" fill="rgba(246,191,211,.85)"/>
-              <path d="M46 16c-6 5-9 10-10 18 7-4 10-9 10-18Z" fill="rgba(246,191,211,.85)"/>
+            <svg
+              viewBox="0 0 64 64"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M32 9c3.3 7.2 3.3 13.4 0 20.8-3.3-7.4-3.3-13.6 0-20.8Z"
+                fill="rgba(241,168,195,.98)"
+              />
+              <path
+                d="M17 16c6.6 5.2 10 10.6 11.2 19-7.8-4.2-11.2-9.8-11.2-19Z"
+                fill="rgba(255,211,229,.92)"
+              />
+              <path
+                d="M47 16c-6.6 5.2-10 10.6-11.2 19 7.8-4.2 11.2-9.8 11.2-19Z"
+                fill="rgba(255,211,229,.92)"
+              />
+              <path
+                d="M12 29c8.6 2.2 14 6.4 18.6 14.2-9.1-1.2-14.6-5.4-18.6-14.2Z"
+                fill="rgba(241,168,195,.72)"
+              />
+              <path
+                d="M52 29c-8.6 2.2-14 6.4-18.6 14.2 9.1-1.2 14.6-5.4 18.6-14.2Z"
+                fill="rgba(241,168,195,.72)"
+              />
             </svg>
           </span>
+          <span>Lotus AI</span>
+        </a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#how">How it works</a>
+          <a href="#waitlist">Waitlist</a>
+          <a
+            href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+        </nav>
+
+        <a class="btn primary" href="#waitlist">Join waitlist</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <div class="wrap hero">
+        <div class="heroGrid">
           <div>
-            <div style="font-weight:900;">Lotus AI</div>
-            <div style="font-size:12px;color:rgba(21,18,26,.55);">© <span id="year"></span></div>
+            <div class="pill reveal">
+              <span class="lotus" aria-hidden="true">
+                <svg
+                  viewBox="0 0 64 64"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M32 9c3.3 7.2 3.3 13.4 0 20.8-3.3-7.4-3.3-13.6 0-20.8Z"
+                    fill="rgba(241,168,195,.98)"
+                  />
+                  <path
+                    d="M17 16c6.6 5.2 10 10.6 11.2 19-7.8-4.2-11.2-9.8-11.2-19Z"
+                    fill="rgba(255,211,229,.92)"
+                  />
+                  <path
+                    d="M47 16c-6.6 5.2-10 10.6-11.2 19 7.8-4.2 11.2-9.8 11.2-19Z"
+                    fill="rgba(255,211,229,.92)"
+                  />
+                </svg>
+              </span>
+              People Intelligence for meetings
+            </div>
+
+            <h1 class="reveal">Know people before you meet them.</h1>
+            <p class="sub reveal">
+              Lotus AI turns meeting context into prep, signals, and crisp
+              follow-ups — delivered into the tools your team already uses.
+            </p>
+
+            <div class="ctaRow reveal">
+              <a class="btn primary" href="#waitlist">Join waitlist</a>
+              <a
+                class="btn"
+                href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true"
+                target="_blank"
+                rel="noopener"
+                >Follow on LinkedIn</a
+              >
+            </div>
+
+            <p class="muted reveal" style="margin-top: 10px">
+              Launching soon. Early waitlist gets first access.
+            </p>
+          </div>
+
+          <div class="panel reveal" aria-label="Simple product summary">
+            <div class="inner">
+              <div class="mini">
+                <h3>For BD teams and leaders</h3>
+                <p>Less digging. More clarity. Better conversations.</p>
+              </div>
+              <div style="height: 12px"></div>
+              <div class="mini">
+                <h3>Evidence-first summaries</h3>
+                <p>
+                  Grounded notes from voice + context — so follow-ups stay
+                  accurate.
+                </p>
+              </div>
+              <div style="height: 12px"></div>
+              <div class="mini">
+                <h3>Built to integrate</h3>
+                <p>
+                  Designed to plug into workflows (CRM, docs, tasks) as you
+                  scale.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn" href="blog.html">Blog</a>
-          <a class="btn" href="#pricing">Pricing</a>
-          <button class="btn primary" type="button" data-join>Join waitlist</button>
+      <section id="how">
+        <div class="wrap">
+          <div class="sectionTitle">
+            <h2 class="reveal">How it works</h2>
+            <p class="reveal">A simple flow — no fluff.</p>
+          </div>
+
+          <div class="flow reveal" aria-label="How it works flow">
+            <div class="flowCard">
+              <b>Meeting context</b>
+              <span>Calendar + attendees + notes.</span>
+            </div>
+
+            <div class="arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h12"
+                  stroke="rgba(246,243,251,.65)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M13 6l6 6-6 6"
+                  stroke="rgba(246,243,251,.65)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div class="flowCard">
+              <b>Prep + signals</b>
+              <span>Key points, risks, alignment, and questions.</span>
+            </div>
+
+            <div class="arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h12"
+                  stroke="rgba(246,243,251,.65)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M13 6l6 6-6 6"
+                  stroke="rgba(246,243,251,.65)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div class="flowCard">
+              <b>Follow-up</b>
+              <span>Next steps, owners, and clean recap.</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
-  </main>
+      </section>
 
-  <!-- Floating Waitlist Form -->
-  <div class="floatWrap" aria-live="polite">
-    <div class="floatCard" id="floatCard">
-      <div class="floatHead">
-        <b>Join the waitlist</b>
-        <button class="closeBtn" id="closeFloat" aria-label="Close waitlist form">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" stroke="rgba(21,18,26,.7)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="floatBody">
-        <p>Early access + Keys updates.</p>
+      <section id="waitlist">
+        <div class="wrap">
+          <div class="sectionTitle">
+            <h2 class="reveal">Join the waitlist</h2>
+            <p class="reveal">Get early access updates. No spam.</p>
+          </div>
 
-        <form id="waitlistForm" class="frow">
-          <input class="input" name="name" placeholder="Name" autocomplete="name" />
-          <input class="input" name="email" placeholder="Work email" autocomplete="email" required />
-          <input class="input" name="company" placeholder="Company" autocomplete="organization" />
-          <button class="btn primary" type="submit" id="submitBtn">Join</button>
-        </form>
+          <div class="waitlistWrap reveal">
+            <div class="waitlistFrame">
+              <div class="waitlistHead">
+                <b>Lotus AI — Early Access</b>
+                <small>~30 seconds</small>
+              </div>
 
-        <div class="floatMsg" id="floatMsg"></div>
-        <div class="fine" style="margin-top:8px;">No spam.</div>
-      </div>
-    </div>
+              <!-- Airtable Embed -->
+              <iframe
+                class="airtable-embed"
+                src="https://airtable.com/embed/appU6QR0VDsRRciEk/pagMCMptogVy5XWiR/form"
+                frameborder="0"
+                onmousewheel=""
+                width="100%"
+                height="533"
+                style="background: transparent"
+                loading="lazy"
+                title="Lotus AI Waitlist Form"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <button class="openPill" id="openFloat" type="button">
-      <span class="lotus" aria-hidden="true">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M32 10c3 7 3 13 0 20-3-7-3-13 0-20Z" fill="rgba(233,138,176,.95)"/>
-          <path d="M18 16c6 5 9 10 10 18-7-4-10-9-10-18Z" fill="rgba(246,191,211,.85)"/>
-          <path d="M46 16c-6 5-9 10-10 18 7-4 10-9 10-18Z" fill="rgba(246,191,211,.85)"/>
-        </svg>
-      </span>
-      Open waitlist
-    </button>
-  </div>
+      <footer>
+        <div class="wrap foot">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <span class="lotus" aria-hidden="true">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32 9c3.3 7.2 3.3 13.4 0 20.8-3.3-7.4-3.3-13.6 0-20.8Z"
+                  fill="rgba(241,168,195,.98)"
+                />
+                <path
+                  d="M17 16c6.6 5.2 10 10.6 11.2 19-7.8-4.2-11.2-9.8-11.2-19Z"
+                  fill="rgba(255,211,229,.92)"
+                />
+                <path
+                  d="M47 16c-6.6 5.2-10 10.6-11.2 19 7.8-4.2 11.2-9.8 11.2-19Z"
+                  fill="rgba(255,211,229,.92)"
+                />
+              </svg>
+            </span>
+            <div>
+              <div style="font-weight: 900">Lotus AI</div>
+              <div class="muted">© <span id="year"></span></div>
+            </div>
+          </div>
 
-  <script>
-    // ✅ Best practice: send form data to YOUR backend endpoint (serverless) that writes to Airtable.
-    // Set this to your function URL (Netlify/Vercel/Cloudflare):
-    const WAITLIST_ENDPOINT = "/api/waitlist"; // e.g. "https://your-site.netlify.app/.netlify/functions/waitlist"
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <a class="btn" href="#how">How it works</a>
+            <a class="btn primary" href="#waitlist">Join waitlist</a>
+            <a
+              class="btn"
+              href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
+          </div>
+        </div>
+      </footer>
+    </main>
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
 
-    // reveal
-    const revealEls = Array.from(document.querySelectorAll(".reveal"));
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries){
-        if (e.isIntersecting) e.target.classList.add("on");
-      }
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
-
-    // Floating form toggle
-    const floatCard = document.getElementById("floatCard");
-    const closeFloat = document.getElementById("closeFloat");
-    const openFloat = document.getElementById("openFloat");
-
-    function hideFloat(){
-      floatCard.style.display = "none";
-      openFloat.style.display = "inline-flex";
-      localStorage.setItem("lotus_waitlist_closed", "1");
-    }
-    function showFloat(){
-      floatCard.style.display = "block";
-      openFloat.style.display = "none";
-      localStorage.removeItem("lotus_waitlist_closed");
-    }
-    closeFloat.addEventListener("click", hideFloat);
-    openFloat.addEventListener("click", showFloat);
-
-    if (localStorage.getItem("lotus_waitlist_closed") === "1"){
-      hideFloat();
-    }
-
-    // Open form buttons
-    function openWaitlist(){
-      showFloat();
-      document.querySelector("#waitlistForm input[name='email']").focus();
-    }
-    document.getElementById("joinTopBtn").addEventListener("click", openWaitlist);
-    document.getElementById("joinHeroBtn").addEventListener("click", openWaitlist);
-    Array.from(document.querySelectorAll("[data-join]")).forEach(b => b.addEventListener("click", openWaitlist));
-
-    // 3D tilt effect (mouse)
-    const tiltCard = document.getElementById("tiltCard");
-    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-    function onMove(e){
-      const r = tiltCard.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;
-      const py = (e.clientY - r.top) / r.height;
-      const ry = clamp((px - 0.5) * 10, -8, 8);
-      const rx = clamp((0.5 - py) * 10, -8, 8);
-      tiltCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-    }
-    function resetTilt(){ tiltCard.style.transform = `rotateX(0deg) rotateY(0deg)`; }
-    tiltCard.addEventListener("mousemove", onMove);
-    tiltCard.addEventListener("mouseleave", resetTilt);
-
-    // Form submit
-    const form = document.getElementById("waitlistForm");
-    const msg = document.getElementById("floatMsg");
-    const submitBtn = document.getElementById("submitBtn");
-
-    function setMsg(text, ok=false){
-      msg.textContent = text;
-      msg.style.color = ok ? "rgba(13, 94, 58, .85)" : "rgba(130, 42, 70, .85)";
-    }
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      setMsg("");
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Joining...";
-
-      const fd = new FormData(form);
-      const payload = {
-        name: (fd.get("name") || "").toString().trim(),
-        email: (fd.get("email") || "").toString().trim(),
-        company: (fd.get("company") || "").toString().trim(),
-        source: "landing_page",
-        ts: new Date().toISOString()
-      };
-
-      try{
-        if (!WAITLIST_ENDPOINT){
-          console.log("Waitlist payload (connect backend to store):", payload);
-          setMsg("Saved locally (demo). Connect Airtable to store signups.", true);
-          form.reset();
-          return;
-        }
-
-        const res = await fetch(WAITLIST_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok){
-          const text = await res.text().catch(() => "");
-          throw new Error("Backend error: " + res.status + " " + text);
-        }
-
-        setMsg("You're in. We'll reach out soon.", true);
-        form.reset();
-      } catch(err){
-        console.error(err);
-        setMsg("Error. Try again or email hello@lotusai.com.");
-      } finally{
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Join";
-      }
-    });
-  </script>
-</body>
+      // reveal
+      const revealEls = Array.from(document.querySelectorAll(".reveal"));
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) e.target.classList.add("on");
+          }
+        },
+        { threshold: 0.12 }
+      );
+      revealEls.forEach((el) => io.observe(el));
+    </script>
+  </body>
 </html>
