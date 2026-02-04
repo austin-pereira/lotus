@@ -1,362 +1,491 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lotus AI | People Intelligence Before Every Meeting</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Lotus AI — People Intelligence for executives and BD. Meeting prep and tasks delivered before every call." />
+  <title>Lotus AI — People Intelligence</title>
+
   <style>
     :root{
       --bg:#fff7fb;
-      --card:#ffffff;
-      --text:#1f1a1d;
-      --muted:#6b5a63;
-      --pink:#ff4fa3;
-      --pink2:#ff8ac8;
-      --border:rgba(255,79,163,.20);
+      --bg2:#ffffff;
+      --card: rgba(255,255,255,.82);
+      --ink:#1f1a1d;
+      --muted: rgba(31,26,29,.62);
+      --line: rgba(31,26,29,.10);
+
+      --accent:#ff4fa3;
+      --accent2:#ff8ac8;
+
       --shadow: 0 18px 60px rgba(31,26,29,.10);
       --shadow2: 0 10px 30px rgba(255,79,163,.12);
+
       --radius: 22px;
-      --max: 1080px;
+      --max: 980px;
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-    *{box-sizing:border-box}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
+      font-family: var(--font);
+      color: var(--ink);
       background:
-        radial-gradient(900px 420px at 18% 10%, rgba(255,79,163,.14), transparent 60%),
-        radial-gradient(900px 520px at 88% 18%, rgba(255,138,200,.16), transparent 60%),
-        radial-gradient(900px 520px at 50% 100%, rgba(255,79,163,.08), transparent 60%),
-        var(--bg);
+        radial-gradient(900px 520px at 20% 12%, rgba(255,79,163,.14), transparent 60%),
+        radial-gradient(900px 520px at 85% 14%, rgba(255,138,200,.16), transparent 60%),
+        radial-gradient(1100px 720px at 50% 110%, rgba(255,79,163,.08), transparent 58%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       overflow-x:hidden;
+      text-align:center;
     }
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:28px 22px 80px}
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 22px; }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.72);
+      border-bottom: 1px solid var(--line);
+    }
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 0;
     }
     .brand{
-      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;
-    }
-    .badge{
-      font-size:12px; color:var(--muted);
-      border:1px solid rgba(31,26,29,.10);
-      padding:6px 10px; border-radius:999px;
-      background:rgba(255,255,255,.6);
-      backdrop-filter: blur(8px);
-    }
-    .hero{
-      display:grid; grid-template-columns: 1.2fr .8fr; gap:26px;
+      display:flex;
       align-items:center;
-      padding:34px 0 10px;
+      gap:10px;
+      font-weight: 820;
+      letter-spacing:.2px;
+      text-align:left;
     }
-    @media (max-width: 920px){
-      .hero{grid-template-columns:1fr; padding-top:22px}
+    .brand img{
+      width:34px;
+      height:34px;
+      object-fit:contain;
+      border-radius: 10px;
     }
+
+    .navlinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      font-size:13px;
+      color: rgba(31,26,29,.70);
+    }
+    .navlinks a{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background .18s ease, transform .18s ease, border-color .18s ease;
+    }
+    .navlinks a:hover{
+      background: rgba(255,79,163,.08);
+      border-color: rgba(255,79,163,.18);
+      transform: translateY(-1px);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,26,29,.12);
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 10px 28px rgba(31,26,29,.08);
+      font-weight: 760;
+      font-size: 13.5px;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 16px 36px rgba(31,26,29,.10);
+      background: rgba(255,255,255,.95);
+      border-color: rgba(255,79,163,.22);
+    }
+    .btn.primary{
+      border:0;
+      color:white;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 30px rgba(255,79,163,.22);
+    }
+    .btn.primary:hover{ box-shadow: 0 16px 38px rgba(255,79,163,.28); }
+
+    .btn.ghost{
+      background: rgba(255,255,255,.70);
+    }
+
+    .btn.disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none !important;
+      box-shadow: 0 10px 28px rgba(31,26,29,.06) !important;
+    }
+
+    /* Hero */
+    .hero{ padding: 52px 0 10px; }
+    .logoHero{
+      width:min(540px, 86%);
+      height:auto;
+      margin: 10px auto 18px;
+      display:block;
+      filter: drop-shadow(0 18px 40px rgba(255,79,163,.12));
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,79,163,.18);
+      background: rgba(255,255,255,.70);
+      color: rgba(31,26,29,.74);
+      font-size: 13px;
+      box-shadow: var(--shadow2);
+      margin: 0 auto;
+    }
+
     h1{
-      font-size:52px; line-height:1.03; margin:0 0 14px;
-      letter-spacing:-.8px;
-    }
-    @media (max-width: 520px){
-      h1{font-size:40px}
+      margin: 14px 0 10px;
+      font-size: clamp(34px, 4.2vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.9px;
     }
     .sub{
-      font-size:18px; line-height:1.55; color:var(--muted);
-      margin:0 0 18px; max-width:58ch;
-    }
-    .pillrow{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 0}
-    .pill{
-      font-size:13px; color:rgba(31,26,29,.82);
-      padding:8px 10px; border-radius:999px;
-      background:rgba(255,255,255,.75);
-      border:1px solid rgba(31,26,29,.08);
-      box-shadow: 0 6px 18px rgba(31,26,29,.05);
+      margin: 0 auto 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16.5px;
     }
 
+    .ctaRow{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      margin-top: 16px;
+    }
+
+    /* Cards */
     .card{
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(31,26,29,.08);
-      border-top: 1px solid rgba(255,79,163,.22);
-      border-left: 1px solid rgba(255,79,163,.16);
-      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid rgba(31,26,29,.10);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 18px;
     }
 
-    .waitlist{
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-      box-shadow: var(--shadow), var(--shadow2);
+    section{ padding: 34px 0; }
+    .sectionTitle h2{
+      margin:0;
+      font-size: 26px;
+      letter-spacing:-.4px;
     }
-    .waitlist h2{
-      margin:0 0 6px; font-size:18px;
+    .sectionTitle p{
+      margin:8px auto 0;
+      color: var(--muted);
+      max-width: 64ch;
     }
-    .waitlist p{
-      margin:0 0 14px; color:var(--muted); font-size:14px; line-height:1.5;
+
+    .flow{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+      max-width: 820px;
+      margin-left:auto;
+      margin-right:auto;
     }
-    form{display:grid; gap:10px; margin-top:10px}
-    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
-    @media (max-width:520px){ .row{grid-template-columns:1fr} }
-    input, select, button{
+
+    .flowCard{
+      border-radius: 18px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(31,26,29,.10);
+      box-shadow: 0 12px 34px rgba(31,26,29,.08);
+      padding: 16px;
+    }
+    .flowCard b{ display:block; margin-bottom: 6px; letter-spacing:.2px; }
+    .flowCard span{ color: rgba(31,26,29,.62); font-size: 13.5px; line-height: 1.5; display:block; }
+
+    /* Waitlist form */
+    .formWrap{
+      max-width: 760px;
+      margin: 14px auto 0;
+    }
+
+    form{
+      display:grid;
+      gap: 12px;
+      margin-top: 10px;
+      text-align:left;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 720px){
+      .nav{ gap:10px; }
+      .grid2{ grid-template-columns: 1fr; }
+      .brand span{ display:none; }
+    }
+
+    label{
+      font-size: 12.5px;
+      color: rgba(31,26,29,.70);
+      margin: 0 0 6px;
+      display:block;
+    }
+
+    input, select, textarea{
       width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(31,26,29,.12);
-      background:rgba(255,255,255,.9);
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(31,26,29,.14);
+      background: rgba(255,255,255,.95);
       outline:none;
-      font-size:14px;
+      font-size: 14px;
     }
-    input:focus, select:focus{
+    textarea{ min-height: 96px; resize: vertical; }
+    input:focus, select:focus, textarea:focus{
       border-color: rgba(255,79,163,.55);
       box-shadow: 0 0 0 4px rgba(255,79,163,.16);
     }
-    button{
-      cursor:pointer;
-      border:0;
-      color:white;
-      font-weight:700;
-      background: linear-gradient(135deg, var(--pink), var(--pink2));
-      box-shadow: 0 10px 30px rgba(255,79,163,.28);
-      letter-spacing:.2px;
+
+    .formActions{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 4px;
     }
-    button:hover{transform: translateY(-1px)}
+
     .fine{
-      font-size:12px; color:rgba(107,90,99,.95);
-      margin-top:10px;
+      text-align:center;
+      font-size: 12px;
+      color: rgba(31,26,29,.55);
+      margin-top: 8px;
+      line-height: 1.45;
     }
 
-    .section{
-      margin-top:42px;
-      padding:24px;
-    }
-    .grid3{
-      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
-    .tile{
-      padding:16px;
-      border-radius:18px;
-      border:1px solid rgba(31,26,29,.08);
-      background:rgba(255,255,255,.72);
-    }
-    .kicker{
-      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
-      color:rgba(255,79,163,.95);
-      font-weight:800;
-      margin:0 0 8px;
-    }
-    .title{
-      font-size:18px; margin:0 0 6px;
-    }
-    .body{
-      margin:0; color:var(--muted); line-height:1.55;
-      font-size:14.5px;
-    }
-    .steps{
-      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top:14px;
-    }
-    @media (max-width: 900px){ .steps{grid-template-columns:1fr} }
-    .stepnum{
-      width:34px; height:34px; border-radius:12px;
-      display:grid; place-items:center;
-      background:rgba(255,79,163,.12);
-      border:1px solid rgba(255,79,163,.22);
-      font-weight:800; color:rgba(255,79,163,.95);
-      margin-bottom:10px;
-    }
+    /* Footer */
     footer{
-      margin-top:46px;
-      padding:18px 6px 0;
-      color:rgba(107,90,99,.95);
-      display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;
+      padding: 34px 0 50px;
+      border-top: 1px solid rgba(31,26,29,.10);
+      background: rgba(255,255,255,.60);
+      backdrop-filter: blur(10px);
+      margin-top: 26px;
     }
-    .links{display:flex; gap:14px; flex-wrap:wrap}
-    .softlink{opacity:.9; text-decoration:none}
-    .softlink:hover{text-decoration:underline}
+    .foot{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 14px;
+      align-items:center;
+      justify-content:center;
+    }
+    .footLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
 
-    /* Decorative blobs */
-    .blob{
-      position:absolute; inset:auto;
-      width:260px; height:260px;
-      border-radius: 60% 40% 55% 45% / 55% 55% 45% 45%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,138,200,.60), rgba(255,79,163,.18), transparent 65%);
-      filter: blur(0px);
-      opacity:.55;
-      pointer-events:none;
+    /* reveal */
+    @media (prefers-reduced-motion: no-preference){
+      .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
+      .reveal.on{ opacity:1; transform: translateY(0); }
     }
-    .b1{top:-90px; right:-90px}
-    .b2{bottom:-120px; left:-110px; opacity:.35}
-    .logo svg{display:block}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">
-        <span class="logo" aria-hidden="true">
-          <!-- Inline lotus mark -->
-          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
-            <path d="M32 10c7 8 10 14 10 20 0 7-4 12-10 12s-10-5-10-12c0-6 3-12 10-20Z" fill="url(#g)"/>
-            <path d="M17 18c5 9 6 16 4 22-2 7-8 10-14 8 2-10 5-20 10-30Z" fill="url(#g2)" opacity=".9"/>
-            <path d="M47 18c5 10 8 20 10 30-6 2-12-1-14-8-2-6-1-13 4-22Z" fill="url(#g2)" opacity=".9"/>
-            <path d="M32 40c-8 0-16 3-22 9 7 3 14 5 22 5s15-2 22-5c-6-6-14-9-22-9Z" fill="url(#g3)" opacity=".9"/>
-            <defs>
-              <linearGradient id="g" x1="22" y1="10" x2="46" y2="44">
-                <stop stop-color="#ff4fa3"/>
-                <stop offset="1" stop-color="#ff8ac8"/>
-              </linearGradient>
-              <linearGradient id="g2" x1="8" y1="18" x2="32" y2="52">
-                <stop stop-color="#ff8ac8"/>
-                <stop offset="1" stop-color="#ff4fa3"/>
-              </linearGradient>
-              <linearGradient id="g3" x1="10" y1="40" x2="54" y2="58">
-                <stop stop-color="#ff4fa3"/>
-                <stop offset="1" stop-color="#ff8ac8"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </span>
+  <div class="grain"></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Lotus AI Home">
+        <img src="logo.png" alt="Lotus AI logo" />
         <span>Lotus AI</span>
-        <span class="badge">People Intelligence for meetings</span>
-      </div>
-      <div class="links">
-        <a class="softlink" href="#how">How it works</a>
-        <a class="softlink" href="#trust">Trust</a>
-        <a class="softlink" href="#waitlist">Waitlist</a>
+      </a>
+
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="/blog">Blog</a>
+      </nav>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="btn primary" href="#waitlist">Join waitlist</a>
+        <button class="btn ghost disabled" type="button" title="Scheduling coming soon" aria-disabled="true">
+          Book now
+        </button>
       </div>
     </div>
+  </header>
 
-    <section class="hero">
-      <div>
-        <p class="kicker">Before the meeting starts</p>
-        <h1>Walk into every meeting already prepared.</h1>
-        <p class="sub">
-          Lotus AI is a people intelligence assistant for executives and business development teams.
-          It pulls context, research, and next-step tasks so you are not scrambling minutes before the call.
-        </p>
-        <div class="pillrow">
-          <span class="pill">Calendar-ready briefs</span>
-          <span class="pill">One-step research</span>
-          <span class="pill">Action items, not noise</span>
-          <span class="pill">Built for packed schedules</span>
-        </div>
+  <main id="top">
+    <div class="wrap hero">
+      <img class="logoHero reveal" src="logo.png" alt="Lotus AI lotus mark" />
+
+      <div class="pill reveal">People intelligence for meetings</div>
+
+      <h1 class="reveal">Walk into every meeting already prepared.</h1>
+
+      <p class="sub reveal">
+        Lotus AI is a people intelligence assistant for executives and business development teams.
+        It pulls context, research, and next-step tasks so you are not scrambling minutes before the call.
+      </p>
+
+      <div class="ctaRow reveal">
+        <a class="btn primary" href="#waitlist">Join waitlist</a>
+        <button class="btn ghost disabled" type="button" title="Scheduling coming soon" aria-disabled="true">
+          Book now
+        </button>
       </div>
 
-      <div id="waitlist" class="card waitlist">
-        <div class="blob b1"></div>
-        <div class="blob b2"></div>
+      <p class="fine reveal">Launching soon. Early waitlist gets first access.</p>
+    </div>
 
-        <h2>Join the waitlist</h2>
-        <p>Get early access to Lotus AI. We onboard a small group at a time.</p>
+    <section id="how">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2 class="reveal">How it works</h2>
+          <p class="reveal">Download, connect your calendar, and get your meeting brief before every call.</p>
+        </div>
 
-        <form onsubmit="event.preventDefault(); alert('Thanks! You are on the waitlist.');">
-          <div class="row">
-            <input required name="name" placeholder="Full name" />
-            <input required type="email" name="email" placeholder="Work email" />
+        <div class="flow reveal" aria-label="How it works flow">
+          <div class="flowCard">
+            <b>Connect</b>
+            <span>Install Lotus AI and connect your calendar. Choose briefs, tasks, or both.</span>
           </div>
-          <div class="row">
-            <input name="company" placeholder="Company (optional)" />
-            <select name="role">
-              <option value="" selected>Role (optional)</option>
-              <option>Executive</option>
-              <option>Business Development</option>
-              <option>Sales</option>
-              <option>Founder</option>
-              <option>Operations</option>
-            </select>
+          <div class="flowCard">
+            <b>Prep</b>
+            <span>People research, key context, and what matters for this meeting.</span>
           </div>
-          <input name="meetings" placeholder="How many meetings per week? (e.g., 15)" />
-          <button type="submit">Request early access</button>
-          <div class="fine">We protect your data. No spam. You can opt out anytime.</div>
-        </form>
-      </div>
-    </section>
-
-    <section class="card section">
-      <p class="kicker">The problem</p>
-      <div class="grid3">
-        <div class="tile">
-          <h3 class="title">Research takes too long</h3>
-          <p class="body">Tabs, notes, LinkedIn, emails, and last-minute prompts. It adds mental load every single day.</p>
-        </div>
-        <div class="tile">
-          <h3 class="title">Context is scattered</h3>
-          <p class="body">The details you need are spread across calendars, tools, and conversations. You lose time stitching it together.</p>
-        </div>
-        <div class="tile">
-          <h3 class="title">Meetings move fast</h3>
-          <p class="body">When your schedule is packed, “I’ll prep later” becomes “I’ll wing it.” That is expensive.</p>
+          <div class="flowCard">
+            <b>Act</b>
+            <span>Open the meeting card. Get talking points and next steps in one place.</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="card section" id="how">
-      <p class="kicker">How it works</p>
-      <div class="steps">
-        <div class="tile">
-          <div class="stepnum">1</div>
-          <h3 class="title">Download and connect</h3>
-          <p class="body">Install Lotus AI and connect your calendar. Choose what you want: briefs, tasks, or both.</p>
+    <section id="waitlist">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2 class="reveal">Join the waitlist</h2>
+          <p class="reveal">Get onboarded with early users. We protect your data.</p>
         </div>
-        <div class="tile">
-          <div class="stepnum">2</div>
-          <h3 class="title">Lotus builds the brief</h3>
-          <p class="body">Before each meeting, Lotus gathers key facts, relationship context, and what matters for the call.</p>
-        </div>
-        <div class="tile">
-          <div class="stepnum">3</div>
-          <h3 class="title">You show up ready</h3>
-          <p class="body">Open the meeting card to review. See your talking points and next actions in one place.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="card section" id="trust">
-      <p class="kicker">Why Lotus AI</p>
-      <div class="grid3">
-        <div class="tile">
-          <h3 class="title">Built for relief</h3>
-          <p class="body">Lotus is not another dashboard. It is calm preparation, delivered when you actually need it.</p>
-        </div>
-        <div class="tile">
-          <h3 class="title">Sits on top of your tools</h3>
-          <p class="body">Calendar-first workflow that works alongside Google Meet, Zoom, and your existing stack.</p>
-        </div>
-        <div class="tile">
-          <h3 class="title">Privacy-first by design</h3>
-          <p class="body">We protect your data, minimize exposure, and optimize for trust over growth tricks.</p>
-        </div>
-      </div>
-    </section>
+        <div class="formWrap card reveal">
+          <form id="waitlistForm" action="#" method="post">
+            <div class="grid2">
+              <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" required placeholder="Your name" />
+              </div>
+              <div>
+                <label for="email">Work email</label>
+                <input id="email" name="email" type="email" required placeholder="you@company.com" />
+              </div>
+            </div>
 
-    <section class="card section">
-      <p class="kicker">Decision moment</p>
-      <div class="tile" style="display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
-        <div>
-          <h3 class="title" style="margin:0 0 6px;">Be prepared for every meeting, automatically.</h3>
-          <p class="body" style="margin:0;">Join the waitlist and get onboarded with our early users and pilots.</p>
+            <div class="grid2">
+              <div>
+                <label for="company">Company</label>
+                <input id="company" name="company" placeholder="Company (optional)" />
+              </div>
+              <div>
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                  <option value="" selected>Select (optional)</option>
+                  <option>Executive</option>
+                  <option>Business Development</option>
+                  <option>Sales</option>
+                  <option>Founder</option>
+                  <option>Operations</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div>
+                <label for="meetings">Meetings per week</label>
+                <input id="meetings" name="meetings" placeholder="e.g., 12" inputmode="numeric" />
+              </div>
+              <div>
+                <label for="stack">Tools you use</label>
+                <input id="stack" name="stack" placeholder="Google Calendar, Zoom, etc (optional)" />
+              </div>
+            </div>
+
+            <div>
+              <label for="note">What do you want Lotus to help with?</label>
+              <textarea id="note" name="note" placeholder="Prep briefs, people research, follow-ups, tasks, or all of it."></textarea>
+            </div>
+
+            <div class="formActions">
+              <button class="btn primary" type="submit" style="min-width:220px;">Request early access</button>
+            </div>
+
+            <div class="fine">
+              No spam. We only email when onboarding opens.<br/>
+              You can opt out anytime.
+            </div>
+          </form>
         </div>
-        <a href="#waitlist" style="text-decoration:none;">
-          <button type="button" style="padding:12px 16px; width:auto;">Join the waitlist</button>
-        </a>
       </div>
     </section>
 
     <footer>
-      <div>© <span id="y"></span> Lotus AI. People made smarter.</div>
-      <div class="links">
-        <a class="softlink" href="#waitlist">Waitlist</a>
-        <a class="softlink" href="#" onclick="alert('Add your privacy page link here.'); return false;">Privacy</a>
-        <a class="softlink" href="#" onclick="alert('Add your contact email here.'); return false;">Contact</a>
+      <div class="wrap foot">
+        <div class="muted">© <span id="year"></span> Lotus AI • People made smarter</div>
+        <div class="footLinks">
+          <a class="btn" href="#top">Home</a>
+          <a class="btn" href="/blog">Blog</a>
+          <a class="btn" href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
     </footer>
-  </div>
+  </main>
 
   <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // reveal
+    const revealEls = Array.from(document.querySelectorAll(".reveal"));
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries){
+        if (e.isIntersecting) e.target.classList.add("on");
+      }
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // form (placeholder)
+    document.getElementById("waitlistForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Thanks. You are on the waitlist.");
+      e.target.reset();
+    });
   </script>
 </body>
 </html>
