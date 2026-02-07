@@ -1,507 +1,728 @@
-```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Lotus AI — People Intelligence for executives and BD. Meeting prep and tasks delivered before every call." />
-  <title>Lotus AI — People Intelligence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotus - People Intelligence Amplified</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-50: #fef1f7;
+            --pink-100: #fde2ef;
+            --pink-200: #fcc5df;
+            --pink-300: #fa97c3;
+            --pink-400: #f75ba0;
+            --pink-500: #f02d7d;
+            --pink-600: #dd1466;
+            --pink-700: #be0b54;
+            --pink-800: #9d0d48;
+            --pink-900: #831040;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+        }
 
-  <style>
-    :root{
-      --bg:#fff7fb;
-      --bg2:#ffffff;
-      --card: rgba(255,255,255,.82);
-      --ink:#1f1a1d;
-      --muted: rgba(31,26,29,.62);
-      --line: rgba(31,26,29,.10);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      --accent:#ff4fa3;
-      --accent2:#ff8ac8;
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-      --shadow: 0 18px 60px rgba(31,26,29,.10);
-      --shadow2: 0 10px 30px rgba(255,79,163,.12);
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--pink-100);
+            animation: slideDown 0.6s ease-out;
+        }
 
-      --radius: 22px;
-      --max: 980px;
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: var(--font);
-      color: var(--ink);
-      background:
-        radial-gradient(900px 520px at 20% 12%, rgba(255,79,163,.14), transparent 60%),
-        radial-gradient(900px 520px at 85% 14%, rgba(255,138,200,.16), transparent 60%),
-        radial-gradient(1100px 720px at 50% 110%, rgba(255,79,163,.08), transparent 58%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x:hidden;
-      text-align:center;
-    }
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--pink-500), var(--pink-700));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
 
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 22px; }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
 
-    /* light grain */
-    .grain{
-      pointer-events:none;
-      position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-      opacity:.06;
-      mix-blend-mode: multiply;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-    /* Header */
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,.72);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 12px 0;
-    }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink-500);
+            transition: width 0.3s ease;
+        }
 
-    /* Logo as background so whitespace doesn't take space */
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight: 820;
-      letter-spacing:.2px;
-      text-align:left;
-      min-width: 140px;
-    }
-    .logoMark{
-      width:34px;
-      height:34px;
-      border-radius: 10px;
-      display:inline-block;
-      background: url("logo.png") center / 240% no-repeat;
-      /* tweak zoom above if needed: 200%..320% */
-      box-shadow: 0 10px 24px rgba(255,79,163,.10);
-    }
+        .nav-links a:hover {
+            color: var(--pink-600);
+        }
 
-    .navlinks{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      align-items:center;
-      font-size:13px;
-      color: rgba(31,26,29,.70);
-    }
-    .navlinks a{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: background .18s ease, transform .18s ease, border-color .18s ease;
-    }
-    .navlinks a:hover{
-      background: rgba(255,79,163,.08);
-      border-color: rgba(255,79,163,.18);
-      transform: translateY(-1px);
-    }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(31,26,29,.12);
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 10px 28px rgba(31,26,29,.08);
-      font-weight: 760;
-      font-size: 13.5px;
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 16px 36px rgba(31,26,29,.10);
-      background: rgba(255,255,255,.95);
-      border-color: rgba(255,79,163,.22);
-    }
-    .btn.primary{
-      border:0;
-      color:white;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 12px 30px rgba(255,79,163,.22);
-    }
-    .btn.primary:hover{ box-shadow: 0 16px 38px rgba(255,79,163,.28); }
+        /* Hero Section */
+        .hero {
+            padding: 180px 2rem 120px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
 
-    .btn.ghost{ background: rgba(255,255,255,.70); }
-    .btn.disabled{
-      opacity:.55;
-      cursor:not-allowed;
-      transform:none !important;
-      box-shadow: 0 10px 28px rgba(31,26,29,.06) !important;
-    }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    /* Hero */
-    .hero{ padding: 52px 0 10px; }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--pink-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            font-weight: 400;
+        }
 
-    /* Hero logo uses background zoom too */
-    .logoHero{
-      width: 360px;
-      height: 220px;
-      margin: 10px auto 18px;
-      background: url("logo.png") center / 190% no-repeat;
-      filter: drop-shadow(0 18px 40px rgba(255,79,163,.12));
-    }
-    @media (max-width:520px){
-      .logoHero{ width: 280px; height: 180px; background-size: 210%; }
-    }
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,79,163,.18);
-      background: rgba(255,255,255,.70);
-      color: rgba(31,26,29,.74);
-      font-size: 13px;
-      box-shadow: var(--shadow2);
-      margin: 0 auto;
-    }
+        .cta-buttons {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
 
-    h1{
-      margin: 14px 0 10px;
-      font-size: clamp(34px, 4.2vw, 56px);
-      line-height: 1.04;
-      letter-spacing: -0.9px;
-    }
-    .sub{
-      margin: 0 auto 18px;
-      max-width: 62ch;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 16.5px;
-    }
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: none;
+            font-family: 'Manrope', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .ctaRow{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:center;
-      align-items:center;
-      margin-top: 16px;
-    }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
+            color: white;
+            box-shadow: 0 10px 40px -10px rgba(240, 45, 125, 0.4);
+        }
 
-    /* Cards */
-    .card{
-      background: var(--card);
-      border: 1px solid rgba(31,26,29,.10);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: 18px;
-    }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px -10px rgba(240, 45, 125, 0.5);
+        }
 
-    section{ padding: 34px 0; }
-    .sectionTitle h2{
-      margin:0;
-      font-size: 26px;
-      letter-spacing:-.4px;
-    }
-    .sectionTitle p{
-      margin:8px auto 0;
-      color: var(--muted);
-      max-width: 64ch;
-    }
+        .btn-secondary {
+            background: white;
+            color: var(--pink-600);
+            border: 2px solid var(--pink-300);
+        }
 
-    .flow{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-      max-width: 820px;
-      margin-left:auto;
-      margin-right:auto;
-    }
+        .btn-secondary:hover {
+            background: var(--pink-50);
+            border-color: var(--pink-500);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -10px rgba(240, 45, 125, 0.2);
+        }
 
-    .flowCard{
-      border-radius: 18px;
-      background: rgba(255,255,255,.86);
-      border: 1px solid rgba(31,26,29,.10);
-      box-shadow: 0 12px 34px rgba(31,26,29,.08);
-      padding: 16px;
-    }
-    .flowCard b{ display:block; margin-bottom: 6px; letter-spacing:.2px; }
-    .flowCard span{ color: rgba(31,26,29,.62); font-size: 13.5px; line-height: 1.5; display:block; }
+        /* Floating Elements */
+        .floating-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-    /* Waitlist form */
-    .formWrap{ max-width: 760px; margin: 14px auto 0; }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
 
-    form{
-      display:grid;
-      gap: 12px;
-      margin-top: 10px;
-      text-align:left;
-    }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--pink-300);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
 
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 720px){
-      .nav{ gap:10px; }
-      .grid2{ grid-template-columns: 1fr; }
-      .brand span{ display:none; }
-    }
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--pink-400);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -7s;
+        }
 
-    label{
-      font-size: 12.5px;
-      color: rgba(31,26,29,.70);
-      margin: 0 0 6px;
-      display:block;
-    }
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--pink-200);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
 
-    input, select, textarea{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(31,26,29,.14);
-      background: rgba(255,255,255,.95);
-      outline:none;
-      font-size: 14px;
-    }
-    textarea{ min-height: 96px; resize: vertical; }
-    input:focus, select:focus, textarea:focus{
-      border-color: rgba(255,79,163,.55);
-      box-shadow: 0 0 0 4px rgba(255,79,163,.16);
-    }
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
 
-    .formActions{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 4px;
-    }
+        /* User Journey Section */
+        .journey {
+            padding: 100px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-    .fine{
-      text-align:center;
-      font-size: 12px;
-      color: rgba(31,26,29,.55);
-      margin-top: 8px;
-      line-height: 1.45;
-    }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--gray-900);
+            letter-spacing: -0.02em;
+            font-weight: 400;
+        }
 
-    /* Footer */
-    footer{
-      padding: 34px 0 50px;
-      border-top: 1px solid rgba(31,26,29,.10);
-      background: rgba(255,255,255,.60);
-      backdrop-filter: blur(10px);
-      margin-top: 26px;
-    }
-    .foot{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 14px;
-      align-items:center;
-      justify-content:center;
-    }
-    .footLinks{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
 
-    /* reveal */
-    @media (prefers-reduced-motion: no-preference){
-      .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
-      .reveal.on{ opacity:1; transform: translateY(0); }
-    }
-  </style>
+        .journey-card {
+            background: linear-gradient(135deg, var(--pink-50) 0%, white 100%);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--pink-100);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pink-400), var(--pink-600));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .journey-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px -15px rgba(240, 45, 125, 0.2);
+            border-color: var(--pink-300);
+        }
+
+        .journey-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            color: var(--pink-300);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--gray-600);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 2rem;
+            background: linear-gradient(180deg, white 0%, var(--pink-50) 100%);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--pink-100);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--pink-300);
+            box-shadow: 0 8px 30px -10px rgba(240, 45, 125, 0.15);
+        }
+
+        .faq-question {
+            padding: 2rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 2rem 2rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--pink-500);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            border: 2px solid var(--pink-100);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
+            color: white;
+            border-color: var(--pink-600);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 70px -15px rgba(240, 45, 125, 0.3);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.07);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-price {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .plan-price span {
+            font-size: 1.2rem;
+            font-family: 'Manrope', sans-serif;
+            opacity: 0.8;
+        }
+
+        .plan-description {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .pricing-card.featured .plan-name,
+        .pricing-card.featured .plan-description {
+            color: white;
+        }
+
+        .pricing-card:not(.featured) .plan-name {
+            color: var(--gray-900);
+        }
+
+        .pricing-card:not(.featured) .plan-description {
+            color: var(--gray-600);
+        }
+
+        .btn-pricing {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+
+        .pricing-card.featured .btn-pricing {
+            background: white;
+            color: var(--pink-600);
+        }
+
+        .pricing-card.featured .btn-pricing:hover {
+            background: var(--pink-50);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--pink-400), var(--pink-200));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            color: var(--gray-400);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-800);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 140px 1.5rem 80px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .journey-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-
 <body>
-  <div class="grain"></div>
-
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Lotus AI Home">
-        <span class="logoMark" aria-hidden="true"></span>
-        <span>Lotus AI</span>
-      </a>
-
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#top">Home</a>
-        <a href="/blog">Blog</a>
-      </nav>
-
-      <div style="display:flex; gap:10px; align-items:center;">
-        <a class="btn primary" href="#waitlist">Join waitlist</a>
-        <button class="btn ghost disabled" type="button" title="Scheduling coming soon" aria-disabled="true">
-          Book now
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main id="top">
-    <div class="wrap hero">
-      <div class="logoHero reveal" aria-hidden="true"></div>
-
-      <div class="pill reveal">People intelligence for meetings</div>
-
-      <h1 class="reveal">Walk into every meeting already prepared.</h1>
-
-      <p class="sub reveal">
-        Lotus AI is a people intelligence assistant for executives and business development teams.
-        It pulls context, research, and next-step tasks so you are not scrambling minutes before the call.
-      </p>
-
-      <div class="ctaRow reveal">
-        <a class="btn primary" href="#waitlist">Join waitlist</a>
-        <button class="btn ghost disabled" type="button" title="Scheduling coming soon" aria-disabled="true">
-          Book now
-        </button>
-      </div>
-
-      <p class="fine reveal">Launching soon. Early waitlist gets first access.</p>
-    </div>
-
-    <section id="how">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <h2 class="reveal">How it works</h2>
-          <p class="reveal">Download, connect your calendar, and get your meeting brief before every call.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Lotus</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#blog">Blog</a>
+            </div>
         </div>
+    </nav>
 
-        <div class="flow reveal" aria-label="How it works flow">
-          <div class="flowCard">
-            <b>Connect</b>
-            <span>Install Lotus AI and connect your calendar. Choose briefs, tasks, or both.</span>
-          </div>
-          <div class="flowCard">
-            <b>Prep</b>
-            <span>People research, key context, and what matters for this meeting.</span>
-          </div>
-          <div class="flowCard">
-            <b>Act</b>
-            <span>Open the meeting card. Get talking points and next steps in one place.</span>
-          </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
         </div>
-      </div>
+        <h1>People Intelligence<br>Platform</h1>
+        <p class="tagline">People Intelligence Amplified</p>
+        <div class="cta-buttons">
+            <a href="#contact" class="btn btn-primary">Book a Call</a>
+            <a href="#waitlist" class="btn btn-secondary">Join Waitlist</a>
+        </div>
     </section>
 
-    <section id="waitlist">
-      <div class="wrap">
-        <div class="sectionTitle">
-          <h2 class="reveal">Join the waitlist</h2>
-          <p class="reveal">Get onboarded with early users. We protect your data.</p>
+    <!-- User Journey -->
+    <section class="journey scroll-reveal">
+        <h2 class="section-title">Learn About Someone<br>With Ease</h2>
+        <div class="journey-grid">
+            <div class="journey-card">
+                <div class="card-number">01</div>
+                <h3 class="card-title">Before Meetings</h3>
+                <p class="card-description">Getting ready for your latte meeting? Already know who you're meeting with. Access comprehensive intelligence before you even sit down.</p>
+            </div>
+            <div class="journey-card">
+                <div class="card-number">02</div>
+                <h3 class="card-title">Read Before Events</h3>
+                <p class="card-description">Never walk into an event unprepared. Get the context you need about attendees and speakers before the conversation starts.</p>
+            </div>
+            <div class="journey-card">
+                <div class="card-number">03</div>
+                <h3 class="card-title">Follow Up Better</h3>
+                <p class="card-description">Make meaningful connections that last. Use insights to craft personalized follow-ups that resonate and build stronger relationships.</p>
+            </div>
         </div>
-
-        <div class="formWrap card reveal">
-          <form id="waitlistForm" action="#" method="post">
-            <div class="grid2">
-              <div>
-                <label for="name">Full name</label>
-                <input id="name" name="name" required placeholder="Your name" />
-              </div>
-              <div>
-                <label for="email">Work email</label>
-                <input id="email" name="email" type="email" required placeholder="you@company.com" />
-              </div>
-            </div>
-
-            <div class="grid2">
-              <div>
-                <label for="company">Company</label>
-                <input id="company" name="company" placeholder="Company (optional)" />
-              </div>
-              <div>
-                <label for="role">Role</label>
-                <select id="role" name="role">
-                  <option value="" selected>Select (optional)</option>
-                  <option>Executive</option>
-                  <option>Business Development</option>
-                  <option>Sales</option>
-                  <option>Founder</option>
-                  <option>Operations</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid2">
-              <div>
-                <label for="meetings">Meetings per week</label>
-                <input id="meetings" name="meetings" placeholder="e.g., 12" inputmode="numeric" />
-              </div>
-              <div>
-                <label for="stack">Tools you use</label>
-                <input id="stack" name="stack" placeholder="Google Calendar, Zoom, etc (optional)" />
-              </div>
-            </div>
-
-            <div>
-              <label for="note">What do you want Lotus to help with?</label>
-              <textarea id="note" name="note" placeholder="Prep briefs, people research, follow-ups, tasks, or all of it."></textarea>
-            </div>
-
-            <div class="formActions">
-              <button class="btn primary" type="submit" style="min-width:220px;">Request early access</button>
-            </div>
-
-            <div class="fine">
-              No spam. We only email when onboarding opens.<br/>
-              You can opt out anytime.
-            </div>
-          </form>
-        </div>
-      </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="faq scroll-reveal">
+        <div class="faq-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    What is Lotus for?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Lotus is designed for executives and business managers who need to build meaningful relationships quickly. Whether you're preparing for client meetings, networking events, or investor calls, Lotus gives you the people intelligence you need to make every interaction count.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How is it used?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Simply download the Lotus app on your preferred device. Our intuitive interface allows you to quickly search for individuals, access their professional background, interests, and recent activities—all in one place. Get the insights you need in seconds.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing scroll-reveal">
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Professional</div>
+                <div class="plan-price">$30<span>/month</span></div>
+                <p class="plan-description">Perfect for individual executives and business managers who want to stay ahead.</p>
+                <a href="#waitlist" class="btn btn-primary btn-pricing">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="plan-name">Enterprise</div>
+                <div class="plan-price">Custom</div>
+                <p class="plan-description">Tailored solutions for teams and organizations with advanced needs.</p>
+                <a href="#contact" class="btn btn-primary btn-pricing">Book a Call</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-      <div class="wrap foot">
-        <div class="muted">© <span id="year"></span> Lotus AI • People made smarter</div>
-        <div class="footLinks">
-          <a class="btn" href="#top">Home</a>
-          <a class="btn" href="/blog">Blog</a>
-          <a class="btn" href="https://www.linkedin.com/company/lotus-intelligence/?viewAsMember=true" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="footer-content">
+            <div class="footer-logo">Lotus</div>
+            <p class="footer-text">© 2024 Lotus. People Intelligence Amplified.</p>
         </div>
-      </div>
     </footer>
-  </main>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    // reveal
-    const revealEls = Array.from(document.querySelectorAll(".reveal"));
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries){
-        if (e.isIntersecting) e.target.classList.add("on");
-      }
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
 
-    // form (placeholder)
-    document.getElementById("waitlistForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Thanks. You are on the waitlist.");
-      e.target.reset();
-    });
-  </script>
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const answer = item.querySelector('.faq-answer');
+                const icon = question.querySelector('.faq-icon');
+                
+                const isOpen = answer.style.display === 'block';
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
+                
+                // Toggle current FAQ
+                if (!isOpen) {
+                    answer.style.display = 'block';
+                    icon.textContent = '−';
+                } else {
+                    answer.style.display = 'none';
+                    icon.textContent = '+';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-```
